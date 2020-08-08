@@ -1,0 +1,16 @@
+*.iml
+*.lock
+*.log
+*.md
+*ignore
+.editorconfig
+.env*
+.eslintcache
+.git*
+.idea
+.prettierrc
+LICENSE
+build
+dist
+node_modules
+package.*

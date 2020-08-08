@@ -1,0 +1,18 @@
+name: Console command execution
+description: Github Action NodeJS project template
+author: hiberbee
+branding:
+  icon: command
+  color: orange
+inputs:
+  command:
+    description: Set command executable
+    required: true
+  arguments:
+    required: false
+    default: ''
+    description: Set comma-separated command arguments
+outputs: {}
+runs:
+  using: node12
+  main: dist/index.js
