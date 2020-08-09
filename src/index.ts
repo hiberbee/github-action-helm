@@ -54,13 +54,16 @@ async function run(): Promise<void> {
   const helmVersion = getInput('helm-version')
   const helmfileVersion = getInput('helmfile-version')
   const repositoryConfig = getInput('repository-config')
+  const helmfileFile = getInput('helmfile-file')
   const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
   const helmCachePath = `${cachePath}/helm`
   const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`
+  const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`
   exportVariable('XDG_CACHE_HOME', cachePath)
+
   const hash = createHash('sha256')
   try {
     await mkdirP(helmCachePath)
@@ -74,8 +77,8 @@ async function run(): Promise<void> {
         await saveCache([helmCachePath], hashSum)
       }
     }
-    if (getInput('helmfile-command') !== '') {
-      await exec('helmfile', [getInput('helmfile-command')])
+    if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
+      await exec('helmfile', [getInput('helmfile-command'), '--file', helmfilePath])
     } else if (getInput('helm-command') !== '') {
       await exec('helm', [getInput('helm-command')])
     }

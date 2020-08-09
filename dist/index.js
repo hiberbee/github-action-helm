@@ -9639,12 +9639,14 @@ function run() {
         const helmVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-version');
         const helmfileVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-version');
         const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config');
+        const helmfileFile = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-file');
         const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`;
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
         const helmCachePath = `${cachePath}/helm`;
         const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`;
+        const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`;
         Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', cachePath);
         const hash = Object(crypto__WEBPACK_IMPORTED_MODULE_9__.createHash)('sha256');
         try {
@@ -9659,8 +9661,8 @@ function run() {
                     yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([helmCachePath], hashSum);
                 }
             }
-            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '') {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helmfile', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command')]);
+            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '' && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(helmfilePath))) {
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helmfile', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command'), '--file', helmfilePath]);
             }
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command')]);

@@ -25,6 +25,10 @@ inputs:
     default: ''
     description: Helmfile command arguments
     required: false
+  helmfile-file:
+    default: helmfile.yaml
+    description: Load config from file or directory.
+    required: false
 outputs: {}
 runs:
   using: node12
