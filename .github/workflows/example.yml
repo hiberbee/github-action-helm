@@ -9,5 +9,3 @@ jobs:
         uses: actions/checkout@main
       - name: Setup Helm
         uses: hiberbee/github-action-helm@latest
-        with:
-          helm-command: version

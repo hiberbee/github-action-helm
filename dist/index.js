@@ -9636,7 +9636,8 @@ function run() {
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
-        const repositoryConfigPath = `${__dirname}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config')}`;
+        const helmCachePath = `${process.env.HOME}/.cache/cache`;
+        const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config')}`;
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(`${cachePath}/helm`);
             Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', `${cachePath}/helm`);
@@ -9651,8 +9652,8 @@ function run() {
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command')]);
             }
-            yield Object(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__.cacheDir)(cachePath, 'helm', helmVersion);
-            yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([cachePath], 'helm');
+            yield Object(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__.cacheDir)(helmCachePath, 'helm', helmVersion);
+            yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([helmCachePath], 'helm');
         }
         catch (error) {
             Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.setFailed)(error.message);

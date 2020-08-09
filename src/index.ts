@@ -55,7 +55,8 @@ async function run(): Promise<void> {
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
-  const repositoryConfigPath = `${__dirname}/${getInput('repository-config')}`
+  const helmCachePath = `${process.env.HOME}/.cache/cache`
+  const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${getInput('repository-config')}`
 
   try {
     await mkdirP(`${cachePath}/helm`)
@@ -70,8 +71,8 @@ async function run(): Promise<void> {
     } else if (getInput('helm-command') !== '') {
       await exec('helm', [getInput('helm-command')])
     }
-    await cacheDir(cachePath, 'helm', helmVersion)
-    await saveCache([cachePath], 'helm')
+    await cacheDir(helmCachePath, 'helm', helmVersion)
+    await saveCache([helmCachePath], 'helm')
   } catch (error) {
     setFailed(error.message)
   }
