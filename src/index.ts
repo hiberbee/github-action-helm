@@ -51,12 +51,13 @@ async function run(): Promise<void> {
   const platform = osPlat === 'win32' ? 'windows' : osPlat.toLowerCase()
   const helmVersion = getInput('helm-version')
   const helmfileVersion = getInput('helmfile-version')
+  const repositoryConfig = getInput('repository-config')
   const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
   const helmCachePath = `${process.env.HOME}/.cache/cache`
-  const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${getInput('repository-config')}`
+  const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`
 
   try {
     await mkdirP(`${cachePath}/helm`)
@@ -64,7 +65,7 @@ async function run(): Promise<void> {
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
     if (await exists(repositoryConfigPath)) {
-      await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
+      await exec('helm', ['repo', 'update', `--repository-config=${repositoryConfigPath}`])
     }
     if (getInput('helmfile-command') !== '') {
       await exec('helmfile', [getInput('helmfile-command')])
