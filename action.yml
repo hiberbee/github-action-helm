@@ -1,17 +1,26 @@
-name: Console command execution
-description: Github Action NodeJS project template
+name: Helm Github Action
+description: Setup Helm and plugins, update repositories and applies configuration
 author: hiberbee
 branding:
-  icon: command
-  color: orange
+  icon: anchor
+  color: blue
 inputs:
-  command:
-    description: Set command executable
-    required: true
-  arguments:
+  helm-version:
+    default: 3.2.4
+    description: Helm version
     required: false
+  helmfile-version:
+    default: 0.125.5
+    description: Helmfile version
+    required: false
+  repository-config:
+    default: repositories.yaml
+    description: Path to the file containing Helm repository names and URLs
+    required: false
+  command:
     default: ''
-    description: Set comma-separated command arguments
+    description: Helm command arguments
+    required: false
 outputs: {}
 runs:
   using: node12

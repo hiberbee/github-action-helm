@@ -22,12 +22,52 @@
  * SOFTWARE.
  */
 
-import { getInput, setFailed } from '@actions/core'
+import { addPath, getInput, setFailed } from '@actions/core'
 import { exec } from '@actions/exec'
+import os from 'os'
+import path from 'path'
+import { cacheDir, downloadTool } from '@actions/tool-cache'
+import { mkdirP, mv } from '@actions/io'
+import { saveCache } from '@actions/cache'
+import { exists } from '@actions/io/lib/io-util'
+
+async function download(url: string, destination: string): Promise<string> {
+  const downloadPath = await downloadTool(url)
+  const destinationDir = path.dirname(destination)
+  await mkdirP(destinationDir)
+  if (url.endsWith('tar.gz') || url.endsWith('tar') || url.endsWith('tgz')) {
+    await exec('tar', ['-xzvf', downloadPath, `--strip=1`])
+    await mv(path.basename(destination), destinationDir)
+  } else {
+    await mv(downloadPath, destination)
+  }
+  await exec('chmod', ['+x', destination])
+  addPath(destinationDir)
+  return downloadPath
+}
 
 async function run(): Promise<void> {
+  const osPlat = os.platform()
+  const platform = osPlat === 'win32' ? 'windows' : osPlat.toLowerCase()
+  const helmVersion = getInput('helm-version')
+  const helmfileVersion = getInput('helmfile-version')
+  const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`
+  const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
+  const repositoryConfig = getInput('repository-config')
+  const binPath = `${process.env.HOME}/bin`
+  const cachePath = `${process.env.HOME}/.cache/helm`
+
   try {
-    await exec(getInput('command'), getInput('arguments').split(' '))
+    await cacheDir(cachePath, 'helm', helmVersion)
+    await download(helmUrl, `${binPath}/helm`)
+    await download(helmfileUrl, `${binPath}/helmfile`)
+    if (repositoryConfig && await exists(`${__dirname}/${getInput('repositories-config')}`)) {
+      await exec('helm', ['repo', 'update', '--repository-config', getInput('repository-config')])
+    }
+    if (getInput('command')) {
+      await exec('helm', [getInput('command')])
+    }
+    await saveCache([cachePath], 'helm')
   } catch (error) {
     setFailed(error.message)
   }

@@ -9,6 +9,7 @@
     "importHelpers": true,
     "lib": [
       "dom",
+      "ES5",
       "ES6"
     ],
     "module": "ES6",

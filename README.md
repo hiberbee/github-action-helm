@@ -1,21 +1,19 @@
-# Github Action NodeJS Template
+# Helm Github Action
 
-Executes command with arguments
+Install Helm, Helmfile, update repositories if provided and optionally executes Helm command
 
-## Example 
+## Example
 
 ```yaml
-name: Github Action example workflow
+name: Helm
 on: push
 jobs:
-  command:
-    name: Exec command
-    runs-on: ubuntu-latest
+  helm:
+    name: Bootstrap Helm
+    runs-on: ubuntu-20.04
     steps:
-      - name: NodeJS command
-        uses: hiberbee/template-github-action-nodejs@master
-        with:
-          command: docker
-          arguments: ps -a
-
+      - name: Checkout sources
+        uses: actions/checkout@main
+      - name: Setup Helm
+        uses: hiberbee/github-action-helm@latest
 ```

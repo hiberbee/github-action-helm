@@ -1,20 +1,11 @@
-name: Github Action example workflow
+name: Helm
 on: push
 jobs:
-  command:
-    name: Exec command
-    runs-on: ubuntu-latest
+  helm:
+    name: Bootstrap Helm
+    runs-on: ubuntu-20.04
     steps:
-      - name: Setup NodeJS
-        uses: actions/setup-node@main
-        with:
-          node-version: 12
       - name: Checkout sources
         uses: actions/checkout@main
-      - name: Install dependencies
-        run: npm install
-      - name: NodeJS command
-        uses: hiberbee/template-github-action-nodejs@master
-        with:
-          command: npm
-          arguments: run release
+      - name: Setup Helm
+        uses: hiberbee/github-action-helm@latest
