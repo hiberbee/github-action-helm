@@ -1505,7 +1505,7 @@ function run() {
         Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.exportVariable)('XDG_CACHE_HOME', cachePath);
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
-            const repositoryArgs = (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(repositoryConfigPath)) ? [`--repository-config=${repositoryConfigPath}`] : [];
+            const repositoryArgs = (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(repositoryConfigPath)) ? ['--repository-config', repositoryConfigPath] : [];
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
             if (repositoryArgs.length > 0) {

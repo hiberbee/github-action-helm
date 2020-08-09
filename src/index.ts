@@ -68,7 +68,7 @@ async function run(): Promise<void> {
 
   try {
     await mkdirP(helmCachePath)
-    const repositoryArgs = await exists(repositoryConfigPath) ? [`--repository-config=${repositoryConfigPath}`] : []
+    const repositoryArgs = await exists(repositoryConfigPath) ? ['--repository-config', repositoryConfigPath] : []
 
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
