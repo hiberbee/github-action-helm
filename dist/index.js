@@ -1505,14 +1505,14 @@ function run() {
         Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.exportVariable)('XDG_CACHE_HOME', cachePath);
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
-            const repositoryArgs = (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(repositoryConfigPath)) ? ['--repository-config', repositoryConfigPath] : [];
+            const repositoryArgs = (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(repositoryConfigPath)) ? [`--repository-config=${repositoryConfigPath}`] : [];
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
             if (repositoryArgs.length > 0) {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', ['repo', 'update'].concat(repositoryArgs));
             }
             if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command') !== '' && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(helmfilePath))) {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' ').concat(['--file', helmfilePath]));
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' ').concat([`--file=${helmfilePath}`]));
             }
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command').split(' ').concat(repositoryArgs));

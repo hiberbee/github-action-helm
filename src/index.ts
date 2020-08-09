@@ -68,7 +68,7 @@ async function run(): Promise<void> {
 
   try {
     await mkdirP(helmCachePath)
-    const repositoryArgs = await exists(repositoryConfigPath) ? ['--repository-config', repositoryConfigPath] : []
+    const repositoryArgs = await exists(repositoryConfigPath) ? [`--repository-config=${repositoryConfigPath}`] : []
 
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
@@ -76,7 +76,7 @@ async function run(): Promise<void> {
       await exec('helm', ['repo', 'update'].concat(repositoryArgs))
     }
     if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
-      await exec('helmfile', getInput('helmfile-command').split(' ').concat(['--file', helmfilePath]))
+      await exec('helmfile', getInput('helmfile-command').split(' ').concat([`--file=${helmfilePath}`]))
     } else if (getInput('helm-command') !== '') {
       await exec('helm', getInput('helm-command').split(' ').concat(repositoryArgs))
     }
