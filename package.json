@@ -53,7 +53,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn release && git add ."
+      "pre-commit": "npm run release && git add ."
     }
   }
 }
