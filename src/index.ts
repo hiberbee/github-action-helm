@@ -56,14 +56,15 @@ async function run(): Promise<void> {
   const repositoryConfig = getInput('repository-config')
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
+  const repositoryConfigPath = `${__dirname}/${getInput('repositories-config')}`
 
   try {
     await mkdirP(`${cachePath}/helm`)
     exportVariable('XDG_CACHE_HOME', `${cachePath}/helm`)
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
-    if (repositoryConfig && await exists(`${__dirname}/${getInput('repositories-config')}`)) {
-      await exec('helm', ['repo', 'update', '--repository-config', getInput('repository-config')])
+    if (repositoryConfig && await exists(repositoryConfigPath)) {
+      await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
     }
     if (getInput('helmfile-command') !== '') {
       await exec('helmfile', [getInput('helmfile-command')])

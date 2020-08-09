@@ -9637,13 +9637,14 @@ function run() {
         const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config');
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
+        const repositoryConfigPath = `${__dirname}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repositories-config')}`;
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(`${cachePath}/helm`);
             Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', `${cachePath}/helm`);
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
-            if (repositoryConfig && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(`${__dirname}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repositories-config')}`))) {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', '--repository-config', Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config')]);
+            if (repositoryConfig && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath))) {
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
             }
             if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helmfile', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command')]);
