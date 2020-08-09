@@ -9651,12 +9651,13 @@ function run() {
         const hash = Object(crypto__WEBPACK_IMPORTED_MODULE_3__.createHash)('sha256');
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_8__.mkdirP)(helmCachePath);
+            const repositoryArgs = (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__.exists)(repositoryConfigPath)) ? ['--repository-config', repositoryConfigPath] : [];
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
-            if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__.exists)(repositoryConfigPath)) {
+            if (repositoryArgs.length > 0) {
                 const hashSum = hash.update(Object(fs__WEBPACK_IMPORTED_MODULE_4__.readFileSync)(repositoryConfigPath)).digest('hex');
                 const restoredFromCache = yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.restoreCache)([helmCachePath], hashSum);
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', ['repo', 'update'].concat(repositoryArgs));
                 if (restoredFromCache === undefined) {
                     yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.saveCache)([helmCachePath], hashSum);
                 }
@@ -9665,7 +9666,7 @@ function run() {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helmfile-command').split(' ').concat(['--file', helmfilePath]));
             }
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-command') !== '') {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-command').split(' '));
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-command').split(' ').concat(repositoryArgs));
             }
         }
         catch (error) {

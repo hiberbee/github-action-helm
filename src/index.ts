@@ -72,12 +72,14 @@ async function run(): Promise<void> {
   const hash = createHash('sha256')
   try {
     await mkdirP(helmCachePath)
+    const repositoryArgs = await exists(repositoryConfigPath) ? ['--repository-config', repositoryConfigPath] : []
+
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
-    if (await exists(repositoryConfigPath)) {
+    if (repositoryArgs.length > 0) {
       const hashSum = hash.update(readFileSync(repositoryConfigPath)).digest('hex')
       const restoredFromCache = await restoreCache([helmCachePath], hashSum)
-      await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
+      await exec('helm', ['repo', 'update'].concat(repositoryArgs))
       if (restoredFromCache === undefined) {
         await saveCache([helmCachePath], hashSum)
       }
@@ -85,7 +87,7 @@ async function run(): Promise<void> {
     if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
       await exec('helmfile', getInput('helmfile-command').split(' ').concat(['--file', helmfilePath]))
     } else if (getInput('helm-command') !== '') {
-      await exec('helm', getInput('helm-command').split(' '))
+      await exec('helm', getInput('helm-command').split(' ').concat(repositoryArgs))
     }
   } catch (error) {
     setFailed(error.message)
