@@ -9600,6 +9600,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_actions_cache__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(672);
 /* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(417);
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(747);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_10__);
+
+
 
 
 
@@ -9640,12 +9646,18 @@ function run() {
         const helmCachePath = `${cachePath}/helm`;
         const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`;
         Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', cachePath);
+        const hash = Object(crypto__WEBPACK_IMPORTED_MODULE_9__.createHash)('sha256');
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
             if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath)) {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', "--repository-config", repositoryConfigPath]);
+                const hashSum = hash.update(Object(fs__WEBPACK_IMPORTED_MODULE_10__.readFileSync)(repositoryConfigPath)).digest('hex');
+                const restoredFromCache = yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.restoreCache)([helmCachePath], hashSum);
+                if (restoredFromCache === undefined) {
+                    yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
+                    yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([helmCachePath], hashSum);
+                }
             }
             if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helmfile', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command')]);
@@ -9653,8 +9665,6 @@ function run() {
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command')]);
             }
-            yield Object(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__.cacheDir)(helmCachePath, 'helm', helmVersion);
-            yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([helmCachePath], 'helm');
         }
         catch (error) {
             Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.setFailed)(error.message);
