@@ -56,14 +56,12 @@ async function run(): Promise<void> {
   const helmVersion = getInput('helm-version')
   const helmfileVersion = getInput('helmfile-version')
   const repositoryConfig = getInput('repository-config')
-  const helmfileFile = getInput('helmfile-file')
   const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
   const helmCachePath = `${cachePath}/helm`
   const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`
-  const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`
   exportVariable('XDG_CACHE_HOME', cachePath)
 
   try {
@@ -75,8 +73,8 @@ async function run(): Promise<void> {
     if (repositoryArgs.length > 0) {
       await exec('helm', ['repo', 'update'].concat(repositoryArgs))
     }
-    if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
-      await exec('helmfile', getInput('helmfile-command').split(' ').concat([`--file=${helmfilePath}`]))
+    if (getInput('helmfile-command') !== '') {
+      await exec('helmfile', getInput('helmfile-command').split(' ').concat(['-f', getInput('helmfile-file')]))
     } else if (getInput('helm-command') !== '') {
       await exec('helm', getInput('helm-command').split(' ').concat(repositoryArgs))
     }

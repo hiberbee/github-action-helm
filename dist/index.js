@@ -1494,14 +1494,12 @@ function run() {
         const helmVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-version');
         const helmfileVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-version');
         const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('repository-config');
-        const helmfileFile = Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-file');
         const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`;
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
         const helmCachePath = `${cachePath}/helm`;
         const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`;
-        const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`;
         Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.exportVariable)('XDG_CACHE_HOME', cachePath);
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
@@ -1511,8 +1509,8 @@ function run() {
             if (repositoryArgs.length > 0) {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', ['repo', 'update'].concat(repositoryArgs));
             }
-            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command') !== '' && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_7__.exists)(helmfilePath))) {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' ').concat([`--file=${helmfilePath}`]));
+            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command') !== '') {
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' ').concat(['-f', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-file')]));
             }
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command').split(' ').concat(repositoryArgs));
