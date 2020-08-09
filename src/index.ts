@@ -53,17 +53,16 @@ async function run(): Promise<void> {
   const helmfileVersion = getInput('helmfile-version')
   const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
-  const repositoryConfig = getInput('repository-config')
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
-  const repositoryConfigPath = `${__dirname}/${getInput('repositories-config')}`
+  const repositoryConfigPath = `${__dirname}/${getInput('repository-config')}`
 
   try {
     await mkdirP(`${cachePath}/helm`)
     exportVariable('XDG_CACHE_HOME', `${cachePath}/helm`)
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
-    if (repositoryConfig && await exists(repositoryConfigPath)) {
+    if (await exists(repositoryConfigPath)) {
       await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
     }
     if (getInput('helmfile-command') !== '') {

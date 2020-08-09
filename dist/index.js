@@ -9634,16 +9634,15 @@ function run() {
         const helmfileVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-version');
         const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`;
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
-        const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config');
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
-        const repositoryConfigPath = `${__dirname}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repositories-config')}`;
+        const repositoryConfigPath = `${__dirname}/${Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config')}`;
         try {
             yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(`${cachePath}/helm`);
             Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', `${cachePath}/helm`);
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
-            if (repositoryConfig && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath))) {
+            if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath)) {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
             }
             if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '') {
