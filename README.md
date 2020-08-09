@@ -9,21 +9,20 @@ name: Helm
 on: push
 jobs:
   helm:
-    name: Bootstrap Helm
+    name: Bootstrap
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout sources
         uses: actions/checkout@main
-      - name: Setup Helm
-        uses: hiberbee/github-action-helm@latest
-      - name: Get Helm version
+      - name: Get Helm repositories
         uses: hiberbee/github-action-helm@latest
         with:
-          helm-command: version
+          helm-command: repo list
       - name: Get Helmfile version
         uses: hiberbee/github-action-helm@latest
         with:
-          helmfile-command: version
+          helmfile-command: lint
+
 ```
 
 ## Repositories config example

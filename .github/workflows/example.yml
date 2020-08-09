@@ -7,8 +7,6 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@main
-      - name: Setup Helm
-        uses: hiberbee/github-action-helm@latest
       - name: Get Helm repositories
         uses: hiberbee/github-action-helm@latest
         with:
@@ -16,4 +14,4 @@ jobs:
       - name: Get Helmfile version
         uses: hiberbee/github-action-helm@latest
         with:
-          helmfile-command: list
+          helmfile-command: lint

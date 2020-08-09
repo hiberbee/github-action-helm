@@ -1510,7 +1510,7 @@ function run() {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', ['repo', 'update'].concat(repositoryArgs));
             }
             if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command') !== '') {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' ').concat(['-f', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-file')]));
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helmfile-command').split(' '));
             }
             else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command') !== '') {
                 yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_4__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_3__.getInput)('helm-command').split(' ').concat(repositoryArgs));

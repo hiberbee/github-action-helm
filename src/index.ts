@@ -74,7 +74,7 @@ async function run(): Promise<void> {
       await exec('helm', ['repo', 'update'].concat(repositoryArgs))
     }
     if (getInput('helmfile-command') !== '') {
-      await exec('helmfile', getInput('helmfile-command').split(' ').concat(['-f', getInput('helmfile-file')]))
+      await exec('helmfile', getInput('helmfile-command').split(' '))
     } else if (getInput('helm-command') !== '') {
       await exec('helm', getInput('helm-command').split(' ').concat(repositoryArgs))
     }
