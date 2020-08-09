@@ -64,8 +64,10 @@ async function run(): Promise<void> {
     if (repositoryConfig && await exists(`${__dirname}/${getInput('repositories-config')}`)) {
       await exec('helm', ['repo', 'update', '--repository-config', getInput('repository-config')])
     }
-    if (getInput('command')) {
-      await exec('helm', [getInput('command')])
+    if (getInput('helmfile-command') !== '') {
+      await exec('helmfile', [getInput('helmfile-command')])
+    } else if (getInput('helm-command') !== '') {
+      await exec('helm', [getInput('helm-command')])
     }
     await saveCache([cachePath], 'helm')
   } catch (error) {

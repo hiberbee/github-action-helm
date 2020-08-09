@@ -17,9 +17,13 @@ inputs:
     default: repositories.yaml
     description: Path to the file containing Helm repository names and URLs
     required: false
-  command:
+  helm-command:
     default: ''
     description: Helm command arguments
+    required: false
+  helmfile-command:
+    default: ''
+    description: Helmfile command arguments
     required: false
 outputs: {}
 runs:
