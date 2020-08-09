@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import { addPath, getInput, setFailed } from '@actions/core'
+import { addPath, exportVariable, getInput, setFailed } from '@actions/core'
 import { exec } from '@actions/exec'
 import os from 'os'
 import path from 'path'
@@ -55,10 +55,11 @@ async function run(): Promise<void> {
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const repositoryConfig = getInput('repository-config')
   const binPath = `${process.env.HOME}/bin`
-  const cachePath = `${process.env.HOME}/.cache/helm`
+  const cachePath = `${process.env.HOME}/.cache`
 
   try {
-    await cacheDir(cachePath, 'helm', helmVersion)
+    await mkdirP(`${cachePath}/helm`)
+    exportVariable('XDG_CACHE_HOME', `${cachePath}/helm`)
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
     if (repositoryConfig && await exists(`${__dirname}/${getInput('repositories-config')}`)) {
@@ -69,6 +70,7 @@ async function run(): Promise<void> {
     } else if (getInput('helm-command') !== '') {
       await exec('helm', [getInput('helm-command')])
     }
+    await cacheDir(cachePath, 'helm', helmVersion)
     await saveCache([cachePath], 'helm')
   } catch (error) {
     setFailed(error.message)
