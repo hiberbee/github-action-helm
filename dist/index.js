@@ -9637,11 +9637,11 @@ function run() {
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
         const binPath = `${process.env.HOME}/bin`;
         const cachePath = `${process.env.HOME}/.cache`;
-        const helmCachePath = `${process.env.HOME}/.cache/cache`;
+        const helmCachePath = `${cachePath}/helm`;
         const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`;
+        Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', cachePath);
         try {
-            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(`${cachePath}/helm`);
-            Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', `${cachePath}/helm`);
+            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
             if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath)) {

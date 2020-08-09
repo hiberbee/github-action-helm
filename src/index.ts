@@ -56,12 +56,12 @@ async function run(): Promise<void> {
   const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`
   const binPath = `${process.env.HOME}/bin`
   const cachePath = `${process.env.HOME}/.cache`
-  const helmCachePath = `${process.env.HOME}/.cache/cache`
+  const helmCachePath = `${cachePath}/helm`
   const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`
+  exportVariable('XDG_CACHE_HOME', cachePath)
 
   try {
-    await mkdirP(`${cachePath}/helm`)
-    exportVariable('XDG_CACHE_HOME', `${cachePath}/helm`)
+    await mkdirP(helmCachePath)
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
     if (await exists(repositoryConfigPath)) {
