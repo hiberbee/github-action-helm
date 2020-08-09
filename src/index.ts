@@ -77,8 +77,8 @@ async function run(): Promise<void> {
     if (await exists(repositoryConfigPath)) {
       const hashSum = hash.update(readFileSync(repositoryConfigPath)).digest('hex')
       const restoredFromCache = await restoreCache([helmCachePath], hashSum)
+      await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
       if (restoredFromCache === undefined) {
-        await exec('helm', ['repo', 'update', '--repository-config', repositoryConfigPath])
         await saveCache([helmCachePath], hashSum)
       }
     }

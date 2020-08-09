@@ -9656,8 +9656,8 @@ function run() {
             if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__.exists)(repositoryConfigPath)) {
                 const hashSum = hash.update(Object(fs__WEBPACK_IMPORTED_MODULE_4__.readFileSync)(repositoryConfigPath)).digest('hex');
                 const restoredFromCache = yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.restoreCache)([helmCachePath], hashSum);
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
                 if (restoredFromCache === undefined) {
-                    yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
                     yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.saveCache)([helmCachePath], hashSum);
                 }
             }
