@@ -24,13 +24,10 @@
 
 import os from 'os'
 import path from 'path'
-import { createHash } from 'crypto'
-import { readFileSync } from 'fs'
 import { addPath, exportVariable, getInput, setFailed } from '@actions/core'
 import { exec } from '@actions/exec'
 import { downloadTool } from '@actions/tool-cache'
 import { mkdirP, mv } from '@actions/io'
-import { restoreCache, saveCache } from '@actions/cache'
 import { exists } from '@actions/io/lib/io-util'
 
 /**
@@ -69,7 +66,6 @@ async function run(): Promise<void> {
   const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`
   exportVariable('XDG_CACHE_HOME', cachePath)
 
-  const hash = createHash('sha256')
   try {
     await mkdirP(helmCachePath)
     const repositoryArgs = await exists(repositoryConfigPath) ? ['--repository-config', repositoryConfigPath] : []
@@ -77,12 +73,7 @@ async function run(): Promise<void> {
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
     if (repositoryArgs.length > 0) {
-      const hashSum = hash.update(readFileSync(repositoryConfigPath)).digest('hex')
-      const restoredFromCache = await restoreCache([helmCachePath], hashSum)
       await exec('helm', ['repo', 'update'].concat(repositoryArgs))
-      if (restoredFromCache === undefined) {
-        await saveCache([helmCachePath], hashSum)
-      }
     }
     if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
       await exec('helmfile', getInput('helmfile-command').split(' ').concat(['--file', helmfilePath]))
