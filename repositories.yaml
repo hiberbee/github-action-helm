@@ -1,3 +1,5 @@
-- insecure_skip_tls_verify: false
-  name: stable
-  url: https://kubernetes-charts.storage.googleapis.com
+apiVersion: v2
+
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com

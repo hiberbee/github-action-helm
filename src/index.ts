@@ -65,7 +65,7 @@ async function run(): Promise<void> {
     await download(helmUrl, `${binPath}/helm`)
     await download(helmfileUrl, `${binPath}/helmfile`)
     if (await exists(repositoryConfigPath)) {
-      await exec('helm', ['repo', 'update', `--repository-config=${repositoryConfigPath}`])
+      await exec('helm', ['repo', 'update', "--repository-config", repositoryConfigPath])
     }
     if (getInput('helmfile-command') !== '') {
       await exec('helmfile', [getInput('helmfile-command')])
