@@ -9584,26 +9584,26 @@ module.exports = require("assert");
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(422);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(470);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(986);
-/* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_actions_exec__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87);
-/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(os__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(622);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(533);
-/* harmony import */ var _actions_tool_cache__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1);
-/* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_actions_io__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(692);
-/* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_actions_cache__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(672);
-/* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(417);
-/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(747);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87);
+/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(os__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(622);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(417);
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(747);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(470);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(986);
+/* harmony import */ var _actions_exec__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_actions_exec__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _actions_tool_cache__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(533);
+/* harmony import */ var _actions_tool_cache__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1);
+/* harmony import */ var _actions_io__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_actions_io__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(692);
+/* harmony import */ var _actions_cache__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_actions_cache__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(672);
+/* harmony import */ var _actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__);
 
 
 
@@ -9617,29 +9617,29 @@ __webpack_require__.r(__webpack_exports__);
 
 function download(url, destination) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-        const downloadPath = yield Object(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_5__.downloadTool)(url);
-        const destinationDir = path__WEBPACK_IMPORTED_MODULE_4___default().dirname(destination);
-        yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(destinationDir);
+        const downloadPath = yield Object(_actions_tool_cache__WEBPACK_IMPORTED_MODULE_7__.downloadTool)(url);
+        const destinationDir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(destination);
+        yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_8__.mkdirP)(destinationDir);
         if (url.endsWith('tar.gz') || url.endsWith('tar') || url.endsWith('tgz')) {
-            yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('tar', ['-xzvf', downloadPath, `--strip=1`]);
-            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mv)(path__WEBPACK_IMPORTED_MODULE_4___default().basename(destination), destinationDir);
+            yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('tar', ['-xzvf', downloadPath, `--strip=1`]);
+            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_8__.mv)(path__WEBPACK_IMPORTED_MODULE_2___default().basename(destination), destinationDir);
         }
         else {
-            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mv)(downloadPath, destination);
+            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_8__.mv)(downloadPath, destination);
         }
-        yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('chmod', ['+x', destination]);
-        Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.addPath)(destinationDir);
+        yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('chmod', ['+x', destination]);
+        Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.addPath)(destinationDir);
         return downloadPath;
     });
 }
 function run() {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-        const osPlat = os__WEBPACK_IMPORTED_MODULE_3___default().platform();
+        const osPlat = os__WEBPACK_IMPORTED_MODULE_1___default().platform();
         const platform = osPlat === 'win32' ? 'windows' : osPlat.toLowerCase();
-        const helmVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-version');
-        const helmfileVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-version');
-        const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('repository-config');
-        const helmfileFile = Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-file');
+        const helmVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-version');
+        const helmfileVersion = Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helmfile-version');
+        const repositoryConfig = Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('repository-config');
+        const helmfileFile = Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helmfile-file');
         const helmUrl = `https://get.helm.sh/helm-v${helmVersion}-${platform}-amd64.tar.gz`;
         const helmfileUrl = `https://github.com/roboll/helmfile/releases/download/v${helmfileVersion}/helmfile_${platform}_amd64`;
         const binPath = `${process.env.HOME}/bin`;
@@ -9647,29 +9647,29 @@ function run() {
         const helmCachePath = `${cachePath}/helm`;
         const repositoryConfigPath = `${process.env.GITHUB_WORKSPACE}/${repositoryConfig}`;
         const helmfilePath = `${process.env.GITHUB_WORKSPACE}/${helmfileFile}`;
-        Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.exportVariable)('XDG_CACHE_HOME', cachePath);
-        const hash = Object(crypto__WEBPACK_IMPORTED_MODULE_9__.createHash)('sha256');
+        Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.exportVariable)('XDG_CACHE_HOME', cachePath);
+        const hash = Object(crypto__WEBPACK_IMPORTED_MODULE_3__.createHash)('sha256');
         try {
-            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_6__.mkdirP)(helmCachePath);
+            yield Object(_actions_io__WEBPACK_IMPORTED_MODULE_8__.mkdirP)(helmCachePath);
             yield download(helmUrl, `${binPath}/helm`);
             yield download(helmfileUrl, `${binPath}/helmfile`);
-            if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(repositoryConfigPath)) {
-                const hashSum = hash.update(Object(fs__WEBPACK_IMPORTED_MODULE_10__.readFileSync)(repositoryConfigPath)).digest('hex');
-                const restoredFromCache = yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.restoreCache)([helmCachePath], hashSum);
+            if (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__.exists)(repositoryConfigPath)) {
+                const hashSum = hash.update(Object(fs__WEBPACK_IMPORTED_MODULE_4__.readFileSync)(repositoryConfigPath)).digest('hex');
+                const restoredFromCache = yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.restoreCache)([helmCachePath], hashSum);
                 if (restoredFromCache === undefined) {
-                    yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
-                    yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_7__.saveCache)([helmCachePath], hashSum);
+                    yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', ['repo', 'update', '--repository-config', repositoryConfigPath]);
+                    yield Object(_actions_cache__WEBPACK_IMPORTED_MODULE_9__.saveCache)([helmCachePath], hashSum);
                 }
             }
-            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command') !== '' && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_8__.exists)(helmfilePath))) {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helmfile', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helmfile-command'), '--file', helmfilePath]);
+            if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helmfile-command') !== '' && (yield Object(_actions_io_lib_io_util__WEBPACK_IMPORTED_MODULE_10__.exists)(helmfilePath))) {
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helmfile', Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helmfile-command').split(' ').concat(['--file', helmfilePath]));
             }
-            else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command') !== '') {
-                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_2__.exec)('helm', [Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.getInput)('helm-command')]);
+            else if (Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-command') !== '') {
+                yield Object(_actions_exec__WEBPACK_IMPORTED_MODULE_6__.exec)('helm', Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.getInput)('helm-command').split(' '));
             }
         }
         catch (error) {
-            Object(_actions_core__WEBPACK_IMPORTED_MODULE_1__.setFailed)(error.message);
+            Object(_actions_core__WEBPACK_IMPORTED_MODULE_5__.setFailed)(error.message);
         }
     });
 }

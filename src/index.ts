@@ -22,17 +22,22 @@
  * SOFTWARE.
  */
 
-import { addPath, exportVariable, getInput, setFailed } from '@actions/core'
-import { exec } from '@actions/exec'
 import os from 'os'
 import path from 'path'
-import { cacheDir, downloadTool } from '@actions/tool-cache'
+import { createHash } from 'crypto'
+import { readFileSync } from 'fs'
+import { addPath, exportVariable, getInput, setFailed } from '@actions/core'
+import { exec } from '@actions/exec'
+import { downloadTool } from '@actions/tool-cache'
 import { mkdirP, mv } from '@actions/io'
 import { restoreCache, saveCache } from '@actions/cache'
 import { exists } from '@actions/io/lib/io-util'
-import { createHash } from 'crypto'
-import { readFileSync } from 'fs'
 
+/**
+ * Downloads file from url and extracts if archive detected
+ * @param url
+ * @param destination
+ */
 async function download(url: string, destination: string): Promise<string> {
   const downloadPath = await downloadTool(url)
   const destinationDir = path.dirname(destination)
@@ -78,9 +83,9 @@ async function run(): Promise<void> {
       }
     }
     if (getInput('helmfile-command') !== '' && await exists(helmfilePath)) {
-      await exec('helmfile', [getInput('helmfile-command'), '--file', helmfilePath])
+      await exec('helmfile', getInput('helmfile-command').split(' ').concat(['--file', helmfilePath]))
     } else if (getInput('helm-command') !== '') {
-      await exec('helm', [getInput('helm-command')])
+      await exec('helm', getInput('helm-command').split(' '))
     }
   } catch (error) {
     setFailed(error.message)
