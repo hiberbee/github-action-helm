@@ -1,6 +1,6 @@
 # Helm Github Action
 
-Install Helm, Helmfile, update repositories if provided and optionally executes Helm command
+Install Helm 3.3.0, Helmfile 0.125.5, update repositories if repositories config provided, and optionally executes Helm or Helmfile command
 
 ## Example
 
