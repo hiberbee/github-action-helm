@@ -29,6 +29,15 @@ jobs:
           helm-command: repo list
           repository-config: test/repositories.yaml
 
+      - name: Lint chart
+        run: helm lint nginx
+        working-directory: test/charts
+
+      - name: Install release
+        uses: hiberbee/github-action-helm@latest
+        with:
+          helm-command: upgrade --install --dry-run nginx test/charts/nginx
+
 ```
 
 ### Helmfile workflow
@@ -52,6 +61,10 @@ jobs:
         with:
           helmfile-command: apply
           helmfile-config: test/helmfile.yaml
+
+      - name: Get ingresses
+        run: kubectl get ingress
+
 ```
 
 ## Repositories config example

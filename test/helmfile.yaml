@@ -10,3 +10,17 @@ repositories:
 releases:
   - name: nginx-ingress
     chart: stable/nginx-ingress
+    wait: true
+
+  - name: nginx
+    chart: ./charts/nginx
+    values:
+      - ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          hosts:
+            - host: nginx.local
+              paths: [ "/" ]
+
+
