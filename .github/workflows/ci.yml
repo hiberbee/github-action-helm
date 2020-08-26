@@ -4,6 +4,7 @@ on:
     paths:
       - src/**
       - .github/workflows/**
+      - test/**
       - action.yml
 jobs:
   helm:
