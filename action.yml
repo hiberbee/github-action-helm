@@ -41,6 +41,10 @@ inputs:
     default: info
     required: false
     description: Set log level
+  plugins:
+    default: secrets,diff
+    required: false
+    description: Helm plugins to install
 outputs: {}
 runs:
   using: node12
