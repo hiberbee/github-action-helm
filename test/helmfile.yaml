@@ -9,7 +9,7 @@ repositories:
 
 releases:
   - name: ingress-nginx
-    chart: ingress-nginx/nginx-ingress
+    chart: ingress-nginx/ingress-nginx
     wait: false
 
   - name: nginx
