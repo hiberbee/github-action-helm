@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup Helm
-        uses: hiberbee/actions/helm@latest
+        uses: hiberbee/github-action-helm@latest
         with:
           repository-config: test/repositories.yaml
 
