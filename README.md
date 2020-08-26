@@ -10,25 +10,48 @@ Install Helm 3.3.0, Helmfile 0.125.7, update repositories if repositories config
 
 ## Example
 
+### Helm workflow
+
 ```yaml
-name: Helm
+name: CI
 on: push
 jobs:
   helm:
-    name: Bootstrap
+    name: Helm
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout sources
         uses: actions/checkout@main
-      - name: Get Helm repositories
+
+      - name: Get repositories
         uses: hiberbee/github-action-helm@latest
         with:
           helm-command: repo list
-      - name: Get Helmfile version
+          repository-config: test/repositories.yaml
+
+```
+
+### Helmfile workflow
+
+```yaml
+name: Helmfile CI
+on: push
+jobs:
+  helmfile:
+    name: Helmfile
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@main
+
+      - name: Setup K8s cluster
+        uses: hiberbee/github-action-minikube@latest
+
+      - name: Apply Helmfile
         uses: hiberbee/github-action-helm@latest
         with:
-          helmfile-command: lint
-
+          helmfile-command: apply
+          helmfile-config: test/helmfile.yaml
 ```
 
 ## Repositories config example

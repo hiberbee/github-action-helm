@@ -33,4 +33,4 @@ jobs:
         uses: hiberbee/github-action-helm@latest
         with:
           helmfile-command: apply
-          file: test/helmfile.yaml
+          helmfile-config: test/helmfile.yaml
