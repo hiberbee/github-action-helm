@@ -1,5 +1,11 @@
 # Helm Github Action
 
+<p align="center">
+  <img src="https://img.shields.io/github/license/hiberbee/github-action-helm?style=flat-square" alt="License">
+  <img src="https://img.shields.io/github/workflow/status/hiberbee/github-action-helm/CI?label=github-actions&style=flat-square" alt="GitHub Action Status">
+  <img src="https://img.shields.io/github/v/tag/hiberbee/github-action-helm?label=hiberbee%2Fgithub-action-helm&style=flat-square" alt="GitHub Workflow Version">
+</p>
+
 Install Helm 3.3.0, Helmfile 0.125.7, update repositories if repositories config provided, and optionally executes Helm or Helmfile command
 
 ## Example

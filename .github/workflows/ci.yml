@@ -1,4 +1,4 @@
-name: Helm CI
+name: CI
 on:
   push:
     paths:
