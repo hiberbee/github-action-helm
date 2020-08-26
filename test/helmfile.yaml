@@ -1,0 +1,12 @@
+helmDefaults:
+  historyMax: 1
+  cleanupOnFail: true
+  createNamespace: true
+
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+
+releases:
+  - name: nginx-ingress
+    chart: stable/nginx-ingress

@@ -1,0 +1,37 @@
+name: Helm CI
+on:
+  push:
+    paths:
+      - src/**
+      - .github/workflows/**
+      - action.yml
+jobs:
+  helm:
+    name: Helm
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@main
+
+      - name: Get repositories
+        uses: hiberbee/github-action-helm@latest
+        with:
+          helm-command: repo list
+          repository-config: test/repositories.yaml
+
+  helmfile:
+    name: Helmfile
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@main
+
+      - name: Setup Helm
+        uses: hiberbee/actions/helm@latest
+        with:
+          repository-config: test/repositories.yaml
+
+      - name: Apply Helmfile
+        uses: hiberbee/github-action-helm@latest
+        with:
+          helmfile-command: apply

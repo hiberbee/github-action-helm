@@ -1,3 +1,0 @@
-releases:
-  - name: nginx-ingress
-    chart: stable/nginx-ingress
