@@ -34,7 +34,7 @@ inputs:
     required: false
     description: Request confirmation before attempting to modify clusters
   environment:
-    default: default
+    default: ''
     required: false
     description: Specify the environment name
   kube-context:

@@ -4945,7 +4945,7 @@ function run() {
                     _a.label = 7;
                 case 7:
                     if (!(core_1.getInput('helmfile-command') !== '')) return [3, 10];
-                    return [4, io_util_1.exists(helmfileConfig)];
+                    return [4, io_util_1.exists(helmfileConfigPath)];
                 case 8:
                     helmfileConfigArgs = (_a.sent()) ? ['--file', helmfileConfigPath] : [];
                     return [4, exec_1.exec('helmfile', getHelmfileArgsFromInput().concat(helmfileConfigArgs))];
