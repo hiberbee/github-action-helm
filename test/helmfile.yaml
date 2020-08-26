@@ -4,16 +4,17 @@ helmDefaults:
   createNamespace: true
 
 repositories:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
 
 releases:
-  - name: nginx-ingress
-    chart: stable/nginx-ingress
-    wait: true
+  - name: ingress-nginx
+    chart: ingress-nginx/nginx-ingress
+    wait: false
 
   - name: nginx
     chart: ./charts/nginx
+    wait: false
     values:
       - ingress:
           enabled: true

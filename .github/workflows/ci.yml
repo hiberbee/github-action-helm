@@ -42,7 +42,7 @@ jobs:
       - name: Get ingresses
         run: kubectl get ingress
 
-      - name: Install release
+      - name: Uninstall release
         uses: hiberbee/github-action-helm@latest
         with:
           helm-command: uninstall nginx
