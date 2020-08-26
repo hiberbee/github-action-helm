@@ -4936,7 +4936,7 @@ function run() {
                     return [4, index_1.download(helmUrl, path_1.join(binDir, 'helm')).then(function () {
                             core_1.getInput('plugins')
                                 .split(',')
-                                .filter(plugins.has)
+                                .filter(function (name) { return plugins.has(name); })
                                 .map(function (name) { return plugins.get(name); })
                                 .forEach(function (url) { return exec_1.exec('helm', ['plugin', 'install', url.toString()]); });
                         })];
