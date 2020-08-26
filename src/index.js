@@ -4888,6 +4888,21 @@ var index_1 = __webpack_require__(362);
 var io_1 = __webpack_require__(1);
 var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
+var HelmfileArgs;
+(function (HelmfileArgs) {
+    HelmfileArgs["FILE"] = "--file";
+    HelmfileArgs["ENVIRONMENT"] = "--environment";
+    HelmfileArgs["INTERACTIVE"] = "--interactive";
+    HelmfileArgs["KUBE_CONTEXT"] = "--kube-context";
+    HelmfileArgs["LOG_LEVEL"] = "--log-level";
+})(HelmfileArgs || (HelmfileArgs = {}));
+function getHelmfileArgsFromInput() {
+    return core_1.getInput('helmfile-command')
+        .split(' ')
+        .concat(Object.values(HelmfileArgs)
+        .filter(function (key) { return core_1.getInput(key) !== ''; })
+        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
+}
 var homeDir = index_1.getHomeDir();
 var binDir = index_1.getBinDir();
 var workspaceDir = index_1.getWorkspaceDir();
@@ -4929,7 +4944,7 @@ function run() {
                     _a.label = 7;
                 case 7:
                     if (!(core_1.getInput('helmfile-command') !== '')) return [3, 9];
-                    return [4, exec_1.exec('helmfile', core_1.getInput('helmfile-command').split(' '))];
+                    return [4, exec_1.exec('helmfile', getHelmfileArgsFromInput())];
                 case 8:
                     _a.sent();
                     return [3, 11];

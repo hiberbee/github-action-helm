@@ -9,17 +9,17 @@ inputs:
     default: 3.3.0
     description: Helm version
     required: false
-  helmfile-version:
-    default: 0.125.7
-    description: Helmfile version
+  helm-command:
+    default: ''
+    description: Helm command arguments
     required: false
   repository-config:
     default: repositories.yaml
     description: Path to the file containing Helm repository names and URLs
     required: false
-  helm-command:
-    default: ''
-    description: Helm command arguments
+  helmfile-version:
+    default: 0.125.7
+    description: Helmfile version
     required: false
   helmfile-command:
     default: ''
@@ -29,6 +29,22 @@ inputs:
     default: helmfile.yaml
     description: Load config from file or directory.
     required: false
+  interactive:
+    default: 'false'
+    required: false
+    description: Request confirmation before attempting to modify clusters
+  environment:
+    default: default
+    required: false
+    description: Specify the environment name
+  kube-context:
+    default: ''
+    required: false
+    description: Set kubectl context. Uses current context by default
+  log-level:
+    default: info
+    required: false
+    description: Set log level
 outputs: {}
 runs:
   using: node12
