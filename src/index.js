@@ -4911,7 +4911,7 @@ var plugins = new Map()
     .set('secrets', new URL('https://github.com/zendesk/helm-secrets'));
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, repositoryArgs, globalArgs, _a, _b, error_1;
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, repositoryArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
         return tslib_1.__generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -4923,9 +4923,13 @@ function run() {
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
                     repositoryConfigPath = path_1.join(workspaceDir, repositoryConfig);
                     helmfileConfigPath = path_1.join(workspaceDir, helmfileConfig);
+                    pluginUrls = core_1.getInput('plugins')
+                        .split(',')
+                        .filter(function (name) { return plugins.has(name); })
+                        .map(function (name) { return plugins.get(name); });
                     _c.label = 1;
                 case 1:
-                    _c.trys.push([1, 13, , 14]);
+                    _c.trys.push([1, 17, , 18]);
                     core_1.exportVariable('XDG_CACHE_HOME', cacheDir);
                     return [4, io_util_1.exists(repositoryConfigPath)];
                 case 2:
@@ -4933,45 +4937,51 @@ function run() {
                     return [4, io_1.mkdirP(helmCacheDir)];
                 case 3:
                     _c.sent();
-                    return [4, index_1.download(helmUrl, path_1.join(binDir, 'helm')).then(function () {
-                            core_1.getInput('plugins')
-                                .split(',')
-                                .filter(function (name) { return plugins.has(name); })
-                                .map(function (name) { return plugins.get(name); })
-                                .forEach(function (url) { return exec_1.exec('helm', ['plugin', 'install', url.toString()]); });
-                        })];
+                    return [4, index_1.download(helmUrl, path_1.join(binDir, 'helm'))];
                 case 4:
                     _c.sent();
-                    return [4, index_1.download(helmfileUrl, path_1.join(binDir, 'helmfile'))];
+                    _i = 0, pluginUrls_1 = pluginUrls;
+                    _c.label = 5;
                 case 5:
-                    _c.sent();
-                    if (!(repositoryArgs.length > 0)) return [3, 7];
-                    return [4, exec_1.exec('helm', ['repo', 'update'].concat(repositoryArgs))];
+                    if (!(_i < pluginUrls_1.length)) return [3, 8];
+                    url = pluginUrls_1[_i];
+                    return [4, exec_1.exec('helm', ['plugin', 'install', url.toString()])["catch"](core_1.info)];
                 case 6:
                     _c.sent();
                     _c.label = 7;
                 case 7:
-                    if (!(core_1.getInput('helmfile-command') !== '')) return [3, 10];
-                    _b = (_a = getHelmfileArgsFromInput()).concat;
-                    return [4, io_util_1.exists(helmfileConfigPath)];
-                case 8:
-                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
-                    return [4, exec_1.exec('helmfile', globalArgs.concat(core_1.getInput('helmfile-command').split(' ')))];
+                    _i++;
+                    return [3, 5];
+                case 8: return [4, index_1.download(helmfileUrl, path_1.join(binDir, 'helmfile'))];
                 case 9:
                     _c.sent();
-                    return [3, 12];
+                    if (!(repositoryArgs.length > 0)) return [3, 11];
+                    return [4, exec_1.exec('helm', ['repo', 'update'].concat(repositoryArgs))];
                 case 10:
-                    if (!(core_1.getInput('helm-command') !== '')) return [3, 12];
-                    return [4, exec_1.exec('helm', core_1.getInput('helm-command').split(' ').concat(repositoryArgs))];
-                case 11:
                     _c.sent();
-                    _c.label = 12;
-                case 12: return [3, 14];
+                    _c.label = 11;
+                case 11:
+                    if (!(core_1.getInput('helmfile-command') !== '')) return [3, 14];
+                    _b = (_a = getHelmfileArgsFromInput()).concat;
+                    return [4, io_util_1.exists(helmfileConfigPath)];
+                case 12:
+                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
+                    return [4, exec_1.exec('helmfile', globalArgs.concat(core_1.getInput('helmfile-command').split(' ')))];
                 case 13:
+                    _c.sent();
+                    return [3, 16];
+                case 14:
+                    if (!(core_1.getInput('helm-command') !== '')) return [3, 16];
+                    return [4, exec_1.exec('helm', core_1.getInput('helm-command').split(' ').concat(repositoryArgs))];
+                case 15:
+                    _c.sent();
+                    _c.label = 16;
+                case 16: return [3, 18];
+                case 17:
                     error_1 = _c.sent();
                     core_1.setFailed(error_1.message);
-                    return [3, 14];
-                case 14: return [2];
+                    return [3, 18];
+                case 18: return [2];
             }
         });
     });
