@@ -26,13 +26,12 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@main
 
-      - name: Setup Helm
-        uses: hiberbee/github-action-helm@latest
-        with:
-          repository-config: test/repositories.yaml
+      - name: Setup K8s cluster
+        uses: hiberbee/github-action-minikube@latest
 
       - name: Apply Helmfile
         uses: hiberbee/github-action-helm@latest
         with:
           helmfile-command: apply
           helmfile-file: test/helmfile.yaml
+          repository-config: test/repositories.yaml
