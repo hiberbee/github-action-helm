@@ -4906,9 +4906,12 @@ var workspaceDir = index_1.getWorkspaceDir();
 var cacheDir = path_1.join(homeDir, '.cache');
 var helmCacheDir = path_1.join(cacheDir, 'helm');
 var platform = index_1.getOsPlatform();
+var plugins = new Map()
+    .set('diff', new URL('https://github.com/databus23/helm-diff'))
+    .set('secrets', new URL('https://github.com/zendesk/helm-secrets'));
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, plugins, repositoryConfigPath, helmfileConfigPath, repositoryArgs, globalArgs, _a, _b, error_1;
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, repositoryArgs, globalArgs, _a, _b, error_1;
         return tslib_1.__generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -4918,10 +4921,6 @@ function run() {
                     helmfileConfig = core_1.getInput('helmfile-config');
                     helmUrl = "https://get.helm.sh/helm-v" + helmVersion + "-" + platform + "-amd64.tar.gz";
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
-                    plugins = {
-                        diff: 'https://github.com/databus23/helm-diff',
-                        secrets: 'https://github.com/zendesk/helm-secrets'
-                    };
                     repositoryConfigPath = path_1.join(workspaceDir, repositoryConfig);
                     helmfileConfigPath = path_1.join(workspaceDir, helmfileConfig);
                     _c.label = 1;
@@ -4937,9 +4936,9 @@ function run() {
                     return [4, index_1.download(helmUrl, path_1.join(binDir, 'helm')).then(function () {
                             core_1.getInput('plugins')
                                 .split(',')
-                                .filter(plugins.hasOwnProperty)
-                                .map(function (name) { return plugins[name]; })
-                                .forEach(function (url) { return exec_1.exec('helm', ['plugin', 'install', url]); });
+                                .filter(plugins.has)
+                                .map(function (name) { return plugins.get(name); })
+                                .forEach(function (url) { return exec_1.exec('helm', ['plugin', 'install', url.toString()]); });
                         })];
                 case 4:
                     _c.sent();
