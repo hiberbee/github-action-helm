@@ -4890,13 +4890,15 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
+    HelmfileArgs["ENVIRONMENT"] = "environment";
+    HelmfileArgs["INTERACTIVE"] = "interactive";
+    HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
+    HelmfileArgs["LOG_LEVEL"] = "log-level";
 })(HelmfileArgs || (HelmfileArgs = {}));
 function getHelmfileArgsFromInput() {
-    return core_1.getInput('helmfile-command')
-        .split(' ')
-        .concat(Object.values(HelmfileArgs)
+    return Object.values(HelmfileArgs)
         .filter(function (key) { return core_1.getInput(key) !== ''; })
-        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
+        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); });
 }
 var homeDir = index_1.getHomeDir();
 var binDir = index_1.getBinDir();
@@ -4906,9 +4908,9 @@ var helmCacheDir = path_1.join(cacheDir, 'helm');
 var platform = index_1.getOsPlatform();
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, repositoryArgs, helmfileConfigArgs, error_1;
-        return tslib_1.__generator(this, function (_a) {
-            switch (_a.label) {
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, repositoryArgs, globalArgs, _a, _b, error_1;
+        return tslib_1.__generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     helmVersion = core_1.getInput('helm-version');
                     helmfileVersion = core_1.getInput('helmfile-version');
@@ -4918,45 +4920,46 @@ function run() {
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
                     repositoryConfigPath = path_1.join(workspaceDir, repositoryConfig);
                     helmfileConfigPath = path_1.join(workspaceDir, helmfileConfig);
-                    _a.label = 1;
+                    _c.label = 1;
                 case 1:
-                    _a.trys.push([1, 13, , 14]);
+                    _c.trys.push([1, 13, , 14]);
                     core_1.exportVariable('XDG_CACHE_HOME', cacheDir);
                     return [4, io_util_1.exists(repositoryConfigPath)];
                 case 2:
-                    repositoryArgs = (_a.sent()) ? ['--repository-config', repositoryConfigPath] : [];
+                    repositoryArgs = (_c.sent()) ? ['--repository-config', repositoryConfigPath] : [];
                     return [4, io_1.mkdirP(helmCacheDir)];
                 case 3:
-                    _a.sent();
+                    _c.sent();
                     return [4, index_1.download(helmUrl, path_1.join(binDir, 'helm'))];
                 case 4:
-                    _a.sent();
+                    _c.sent();
                     return [4, index_1.download(helmfileUrl, path_1.join(binDir, 'helmfile'))];
                 case 5:
-                    _a.sent();
+                    _c.sent();
                     if (!(repositoryArgs.length > 0)) return [3, 7];
                     return [4, exec_1.exec('helm', ['repo', 'update'].concat(repositoryArgs))];
                 case 6:
-                    _a.sent();
-                    _a.label = 7;
+                    _c.sent();
+                    _c.label = 7;
                 case 7:
                     if (!(core_1.getInput('helmfile-command') !== '')) return [3, 10];
+                    _b = (_a = getHelmfileArgsFromInput()).concat;
                     return [4, io_util_1.exists(helmfileConfigPath)];
                 case 8:
-                    helmfileConfigArgs = (_a.sent()) ? ['--file', helmfileConfigPath] : [];
-                    return [4, exec_1.exec('helmfile', getHelmfileArgsFromInput().concat(helmfileConfigArgs))];
+                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
+                    return [4, exec_1.exec('helmfile', globalArgs.concat(core_1.getInput('helmfile-command').split(' ')))];
                 case 9:
-                    _a.sent();
+                    _c.sent();
                     return [3, 12];
                 case 10:
                     if (!(core_1.getInput('helm-command') !== '')) return [3, 12];
                     return [4, exec_1.exec('helm', core_1.getInput('helm-command').split(' ').concat(repositoryArgs))];
                 case 11:
-                    _a.sent();
-                    _a.label = 12;
+                    _c.sent();
+                    _c.label = 12;
                 case 12: return [3, 14];
                 case 13:
-                    error_1 = _a.sent();
+                    error_1 = _c.sent();
                     core_1.setFailed(error_1.message);
                     return [3, 14];
                 case 14: return [2];
