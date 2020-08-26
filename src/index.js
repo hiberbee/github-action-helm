@@ -4896,11 +4896,11 @@ var HelmfileArgs;
     HelmfileArgs["LOG_LEVEL"] = "log-level";
 })(HelmfileArgs || (HelmfileArgs = {}));
 function getHelmfileArgsFromInput() {
-    return core_1.getInput('helmfile-command')
-        .split(' ')
-        .concat(Object.values(HelmfileArgs)
+    var command = core_1.getInput('helmfile-command').split(' ');
+    Object.values(HelmfileArgs)
         .filter(function (key) { return core_1.getInput(key) !== ''; })
-        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
+        .forEach(function (key) { return command.concat("--" + key, core_1.getInput(key)); });
+    return command;
 }
 var homeDir = index_1.getHomeDir();
 var binDir = index_1.getBinDir();
