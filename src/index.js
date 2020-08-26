@@ -4890,7 +4890,6 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
-    HelmfileArgs["FILE"] = "file";
     HelmfileArgs["ENVIRONMENT"] = "environment";
     HelmfileArgs["INTERACTIVE"] = "interactive";
     HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
@@ -4911,19 +4910,21 @@ var helmCacheDir = path_1.join(cacheDir, 'helm');
 var platform = index_1.getOsPlatform();
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmUrl, helmfileUrl, repositoryConfigPath, repositoryArgs, error_1;
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, repositoryArgs, helmfileConfigArgs, error_1;
         return tslib_1.__generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     helmVersion = core_1.getInput('helm-version');
                     helmfileVersion = core_1.getInput('helmfile-version');
                     repositoryConfig = core_1.getInput('repository-config');
+                    helmfileConfig = core_1.getInput('helmfile-file');
                     helmUrl = "https://get.helm.sh/helm-v" + helmVersion + "-" + platform + "-amd64.tar.gz";
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
                     repositoryConfigPath = path_1.join(workspaceDir, repositoryConfig);
+                    helmfileConfigPath = path_1.join(workspaceDir, helmfileConfig);
                     _a.label = 1;
                 case 1:
-                    _a.trys.push([1, 12, , 13]);
+                    _a.trys.push([1, 13, , 14]);
                     core_1.exportVariable('XDG_CACHE_HOME', cacheDir);
                     return [4, io_util_1.exists(repositoryConfigPath)];
                 case 2:
@@ -4943,23 +4944,26 @@ function run() {
                     _a.sent();
                     _a.label = 7;
                 case 7:
-                    if (!(core_1.getInput('helmfile-command') !== '')) return [3, 9];
-                    return [4, exec_1.exec('helmfile', getHelmfileArgsFromInput())];
+                    if (!(core_1.getInput('helmfile-command') !== '')) return [3, 10];
+                    return [4, io_util_1.exists(helmfileConfig)];
                 case 8:
-                    _a.sent();
-                    return [3, 11];
+                    helmfileConfigArgs = (_a.sent()) ? ['--file', helmfileConfigPath] : [];
+                    return [4, exec_1.exec('helmfile', getHelmfileArgsFromInput().concat(helmfileConfigArgs))];
                 case 9:
-                    if (!(core_1.getInput('helm-command') !== '')) return [3, 11];
-                    return [4, exec_1.exec('helm', core_1.getInput('helm-command').split(' ').concat(repositoryArgs))];
-                case 10:
                     _a.sent();
-                    _a.label = 11;
-                case 11: return [3, 13];
-                case 12:
+                    return [3, 12];
+                case 10:
+                    if (!(core_1.getInput('helm-command') !== '')) return [3, 12];
+                    return [4, exec_1.exec('helm', core_1.getInput('helm-command').split(' ').concat(repositoryArgs))];
+                case 11:
+                    _a.sent();
+                    _a.label = 12;
+                case 12: return [3, 14];
+                case 13:
                     error_1 = _a.sent();
                     core_1.setFailed(error_1.message);
-                    return [3, 13];
-                case 13: return [2];
+                    return [3, 14];
+                case 14: return [2];
             }
         });
     });
