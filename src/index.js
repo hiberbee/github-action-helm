@@ -4890,11 +4890,11 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
-    HelmfileArgs["FILE"] = "--file";
-    HelmfileArgs["ENVIRONMENT"] = "--environment";
-    HelmfileArgs["INTERACTIVE"] = "--interactive";
-    HelmfileArgs["KUBE_CONTEXT"] = "--kube-context";
-    HelmfileArgs["LOG_LEVEL"] = "--log-level";
+    HelmfileArgs["FILE"] = "file";
+    HelmfileArgs["ENVIRONMENT"] = "environment";
+    HelmfileArgs["INTERACTIVE"] = "interactive";
+    HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
+    HelmfileArgs["LOG_LEVEL"] = "log-level";
 })(HelmfileArgs || (HelmfileArgs = {}));
 function getHelmfileArgsFromInput() {
     return core_1.getInput('helmfile-command')
