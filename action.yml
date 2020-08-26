@@ -29,10 +29,6 @@ inputs:
     default: helmfile.yaml
     description: Load config from file or directory.
     required: false
-  interactive:
-    default: 'false'
-    required: false
-    description: Request confirmation before attempting to modify clusters
   environment:
     default: ''
     required: false

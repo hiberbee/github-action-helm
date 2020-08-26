@@ -4890,17 +4890,13 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
-    HelmfileArgs["ENVIRONMENT"] = "environment";
-    HelmfileArgs["INTERACTIVE"] = "interactive";
-    HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
-    HelmfileArgs["LOG_LEVEL"] = "log-level";
 })(HelmfileArgs || (HelmfileArgs = {}));
 function getHelmfileArgsFromInput() {
-    var command = core_1.getInput('helmfile-command').split(' ');
-    Object.values(HelmfileArgs)
+    return core_1.getInput('helmfile-command')
+        .split(' ')
+        .concat(Object.values(HelmfileArgs)
         .filter(function (key) { return core_1.getInput(key) !== ''; })
-        .forEach(function (key) { return command.concat("--" + key, core_1.getInput(key)); });
-    return command;
+        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
 }
 var homeDir = index_1.getHomeDir();
 var binDir = index_1.getBinDir();
@@ -4917,7 +4913,7 @@ function run() {
                     helmVersion = core_1.getInput('helm-version');
                     helmfileVersion = core_1.getInput('helmfile-version');
                     repositoryConfig = core_1.getInput('repository-config');
-                    helmfileConfig = core_1.getInput('helmfile-file');
+                    helmfileConfig = core_1.getInput('helmfile-config');
                     helmUrl = "https://get.helm.sh/helm-v" + helmVersion + "-" + platform + "-amd64.tar.gz";
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
                     repositoryConfigPath = path_1.join(workspaceDir, repositoryConfig);
