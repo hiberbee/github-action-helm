@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/github/v/tag/hiberbee/github-action-helm?label=hiberbee%2Fgithub-action-helm&style=flat-square" alt="GitHub Workflow Version">
 </p>
 
-Install Helm 3.3.0, Helmfile 0.125.7, update repositories if repositories config provided, and optionally executes Helm or Helmfile command
+Install Helm 3.6.3, Helmfile 0.140.0, update repositories if repositories config provided, and optionally executes Helm or Helmfile command
 
 ## Example
 
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Get repositories
-        uses: hiberbee/github-action-helm@latest
+        uses: hiberbee/github-action-helm@1.3.0
         with:
           helm-command: repo list
           repository-config: test/repositories.yaml
@@ -54,10 +54,10 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup K8s cluster
-        uses: hiberbee/github-action-minikube@latest
+        uses: hiberbee/github-action-minikube@1.5.0
 
       - name: Apply Helmfile
-        uses: hiberbee/github-action-helm@latest
+        uses: hiberbee/github-action-helm@1.3.0
         with:
           helmfile-command: apply
           helmfile-config: test/helmfile.yaml

@@ -5908,7 +5908,7 @@ var helmCacheDir = (0, path_1.join)(workspaceDir, 'helm');
 var platform = (0, index_1.getOsPlatform)();
 var plugins = new Map()
     .set('diff', new URL('https://github.com/databus23/helm-diff'))
-    .set('secrets', new URL('https://github.com/zendesk/helm-secrets'));
+    .set('secrets', new URL('https://github.com/jkroepke/helm-secrets'));
 function run() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
         var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, repositoryArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
