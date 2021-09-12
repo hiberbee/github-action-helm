@@ -1,4 +1,4 @@
-name: Helm Github Action
+name: Helm & Helmfile Action
 description: Setup Helm and plugins, update repositories and applies configuration
 author: hiberbee
 branding:
