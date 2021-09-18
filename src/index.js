@@ -5891,6 +5891,7 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
+    HelmfileArgs["SELECTOR"] = "selector";
     HelmfileArgs["ENVIRONMENT"] = "environment";
     HelmfileArgs["INTERACTIVE"] = "interactive";
     HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
@@ -5899,7 +5900,14 @@ var HelmfileArgs;
 function getHelmfileArgsFromInput() {
     return Object.values(HelmfileArgs)
         .filter(function (key) { return (0, core_1.getInput)(key) !== ''; })
-        .map(function (key) { return "--" + key + "=" + (0, core_1.getInput)(key); });
+        .map(function (key) {
+        return key === HelmfileArgs.SELECTOR
+            ? (0, core_1.getInput)(HelmfileArgs.SELECTOR)
+                .split(',')
+                .map(function (it) { return "--" + key + "=" + it; })
+            : ["--" + key + "=" + (0, core_1.getInput)(key)];
+    })
+        .flat(1);
 }
 var workspaceDir = (0, index_1.getWorkspaceDir)();
 var binDir = (0, index_1.getBinDir)(workspaceDir);

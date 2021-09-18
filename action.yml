@@ -6,7 +6,7 @@ branding:
   color: blue
 inputs:
   helm-version:
-    default: 3.6.3
+    default: 3.7.0
     description: Helm version
     required: false
   helm-command:
@@ -18,7 +18,7 @@ inputs:
     description: Path to the file containing Helm repository names and URLs
     required: false
   helmfile-version:
-    default: 0.140.0
+    default: 0.140.1
     description: Helmfile version
     required: false
   helmfile-command:
@@ -33,6 +33,10 @@ inputs:
     default: ''
     required: false
     description: Specify the environment name
+  selectors:
+    default: ''
+    required: false
+    description: Comma-separated key-value pairs of labels (e.g. foo=bar or foo!=bar)
   kube-context:
     default: ''
     required: false
