@@ -26,7 +26,7 @@ jobs:
       - name: Get repositories
         uses: hiberbee/github-action-helm@1.5.0
         with:
-          helm-command: repo list
+          helm: repo list
           repository-config: test/repositories.yaml
 
       - name: Lint chart
@@ -36,7 +36,7 @@ jobs:
       - name: Install release
         uses: hiberbee/github-action-helm@latest
         with:
-          helm-command: upgrade --install --dry-run nginx test/charts/nginx
+          helm: upgrade --install --dry-run nginx test/charts/nginx
 
 ```
 
@@ -59,7 +59,7 @@ jobs:
       - name: Apply Helmfile
         uses: hiberbee/github-action-helm@1.3.0
         with:
-          helmfile-command: apply
+          helmfile: apply
           helmfile-config: test/helmfile.yaml
 
       - name: Get ingresses

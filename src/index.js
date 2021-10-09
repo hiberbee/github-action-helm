@@ -5860,7 +5860,7 @@ var HelmfileArgs;
     HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
     HelmfileArgs["LOG_LEVEL"] = "log-level";
 })(HelmfileArgs || (HelmfileArgs = {}));
-function getHelmfileArgsFromInput() {
+function getArgsFromInput() {
     return Object.values(HelmfileArgs)
         .filter(function (key) { return (0, core_1.getInput)(key) !== ''; })
         .map(function (key) {
@@ -5900,7 +5900,7 @@ function run() {
                         .map(function (name) { return plugins.get(name); });
                     _c.label = 1;
                 case 1:
-                    _c.trys.push([1, 18, , 19]);
+                    _c.trys.push([1, 17, , 18]);
                     (0, core_1.exportVariable)('XDG_CACHE_HOME', cacheDir);
                     return [4, (0, io_util_1.exists)(repositoryConfigPath)];
                 case 2:
@@ -5916,7 +5916,7 @@ function run() {
                 case 5:
                     if (!(_i < pluginUrls_1.length)) return [3, 8];
                     url = pluginUrls_1[_i];
-                    return [4, (0, exec_1.exec)('helm', ['plugin', 'install', url.toString()], { silent: true })["catch"](core_1.info)];
+                    return [4, (0, exec_1.exec)('helm', ['plugin', 'install', url.toString()])["catch"](core_1.warning)];
                 case 6:
                     _c.sent();
                     _c.label = 7;
@@ -5932,30 +5932,27 @@ function run() {
                     _c.sent();
                     _c.label = 11;
                 case 11:
-                    if (!((0, core_1.getInput)('command') !== '')) return [3, 12];
-                    return [3, 17];
-                case 12:
-                    if (!((0, core_1.getInput)('command') !== '')) return [3, 15];
-                    _b = (_a = getHelmfileArgsFromInput()).concat;
+                    if (!((0, core_1.getInput)('helmfile') !== '')) return [3, 14];
+                    _b = (_a = getArgsFromInput()).concat;
                     return [4, (0, io_util_1.exists)(helmfileConfigPath)];
-                case 13:
+                case 12:
                     globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
-                    return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile-command').split(' ')))];
+                    return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile').split(' ')))];
+                case 13:
+                    _c.sent();
+                    return [3, 16];
                 case 14:
-                    _c.sent();
-                    return [3, 17];
+                    if (!((0, core_1.getInput)('helm') !== '')) return [3, 16];
+                    return [4, (0, exec_1.exec)('helm', (0, core_1.getInput)('helm').split(' ').concat(repositoryArgs))];
                 case 15:
-                    if (!((0, core_1.getInput)('helm-command') !== '')) return [3, 17];
-                    return [4, (0, exec_1.exec)('helm', (0, core_1.getInput)('helm-command').split(' ').concat(repositoryArgs))];
-                case 16:
                     _c.sent();
-                    _c.label = 17;
-                case 17: return [3, 19];
-                case 18:
+                    _c.label = 16;
+                case 16: return [3, 18];
+                case 17:
                     error_1 = _c.sent();
                     (0, core_1.setFailed)(error_1.message);
-                    return [3, 19];
-                case 19: return [2];
+                    return [3, 18];
+                case 18: return [2];
             }
         });
     });

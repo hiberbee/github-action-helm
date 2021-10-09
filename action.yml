@@ -5,15 +5,11 @@ branding:
   icon: anchor
   color: blue
 inputs:
-  command:
-    default: 'helm version'
-    description: Default command to execute
-    required: false
   helm-version:
     default: 3.7.0
     description: Helm version
     required: false
-  helm-command:
+  helm:
     default: ''
     description: Helm command arguments
     required: false
@@ -25,7 +21,7 @@ inputs:
     default: 0.141.0
     description: Helmfile version
     required: false
-  helmfile-command:
+  helmfile:
     default: ''
     description: Helmfile command arguments
     required: false
