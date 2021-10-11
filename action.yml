@@ -29,6 +29,10 @@ inputs:
     default: helmfile.yaml
     description: Load config from file or directory.
     required: false
+  namespace:
+    default: ''
+    required: false
+    description: Kubernetes namespace scope for this request
   environment:
     default: ''
     required: false
