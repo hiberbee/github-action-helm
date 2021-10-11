@@ -5854,7 +5854,7 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
-    HelmfileArgs["SELECTOR"] = "selector";
+    HelmfileArgs["SELECTOR"] = "selectors";
     HelmfileArgs["ENVIRONMENT"] = "environment";
     HelmfileArgs["INTERACTIVE"] = "interactive";
     HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
