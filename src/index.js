@@ -5854,8 +5854,9 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
-    HelmfileArgs["SELECTOR"] = "selectors";
+    HelmfileArgs["SELECTORS"] = "selector";
     HelmfileArgs["ENVIRONMENT"] = "environment";
+    HelmfileArgs["NAMESPACE"] = "namespace";
     HelmfileArgs["INTERACTIVE"] = "interactive";
     HelmfileArgs["KUBE_CONTEXT"] = "kube-context";
     HelmfileArgs["LOG_LEVEL"] = "log-level";
@@ -5864,8 +5865,8 @@ function getArgsFromInput() {
     return Object.values(HelmfileArgs)
         .filter(function (key) { return (0, core_1.getInput)(key) !== ''; })
         .map(function (key) {
-        return key === HelmfileArgs.SELECTOR
-            ? (0, core_1.getInput)(HelmfileArgs.SELECTOR)
+        return key === HelmfileArgs.SELECTORS
+            ? (0, core_1.getInput)(HelmfileArgs.SELECTORS)
                 .split(',')
                 .map(function (it) { return "--" + key + "=" + it; })
             : ["--" + key + "=" + (0, core_1.getInput)(key)];
