@@ -5868,8 +5868,8 @@ function getArgsFromInput() {
         return key === HelmfileArgs.SELECTORS
             ? (0, core_1.getInput)(HelmfileArgs.SELECTORS)
                 .split(',')
-                .map(function (it) { return "--" + key + "=" + it; })
-            : ["--" + key + "=" + (0, core_1.getInput)(key)];
+                .map(function (it) { return "--".concat(key, "=").concat(it); })
+            : ["--".concat(key, "=").concat((0, core_1.getInput)(key))];
     })
         .flat(1);
 }
@@ -5883,7 +5883,7 @@ var plugins = new Map()
     .set('secrets', new URL('https://github.com/jkroepke/helm-secrets'));
 function run() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, repositoryArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, silent, repositoryArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
         return (0, tslib_1.__generator)(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -5891,14 +5891,15 @@ function run() {
                     helmfileVersion = (0, core_1.getInput)('helmfile-version');
                     repositoryConfig = (0, core_1.getInput)('repository-config');
                     helmfileConfig = (0, core_1.getInput)('helmfile-config');
-                    helmUrl = "https://get.helm.sh/helm-v" + helmVersion + "-" + platform + "-amd64.tar.gz";
-                    helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v" + helmfileVersion + "/helmfile_" + platform + "_amd64";
+                    helmUrl = "https://get.helm.sh/helm-v".concat(helmVersion, "-").concat(platform, "-amd64.tar.gz");
+                    helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v".concat(helmfileVersion, "/helmfile_").concat(platform, "_amd64");
                     repositoryConfigPath = (0, path_1.join)(workspaceDir, repositoryConfig);
                     helmfileConfigPath = (0, path_1.join)(workspaceDir, helmfileConfig);
                     pluginUrls = (0, core_1.getInput)('plugins')
                         .split(',')
                         .filter(function (name) { return plugins.has(name); })
                         .map(function (name) { return plugins.get(name); });
+                    silent = Boolean((0, core_1.getInput)('quiet'));
                     _c.label = 1;
                 case 1:
                     _c.trys.push([1, 17, , 18]);
@@ -5917,7 +5918,7 @@ function run() {
                 case 5:
                     if (!(_i < pluginUrls_1.length)) return [3, 8];
                     url = pluginUrls_1[_i];
-                    return [4, (0, exec_1.exec)('helm', ['plugin', 'install', url.toString()])["catch"](core_1.warning)];
+                    return [4, (0, exec_1.exec)('helm', ['plugin', 'install', url.toString()], { silent: silent })["catch"](core_1.warning)];
                 case 6:
                     _c.sent();
                     _c.label = 7;
@@ -5928,7 +5929,7 @@ function run() {
                 case 9:
                     _c.sent();
                     if (!(repositoryArgs.length > 0)) return [3, 11];
-                    return [4, (0, exec_1.exec)('helm', ['repo', 'update'].concat(repositoryArgs))];
+                    return [4, (0, exec_1.exec)('helm', ['repo', 'update'].concat(repositoryArgs), { silent: silent })];
                 case 10:
                     _c.sent();
                     _c.label = 11;

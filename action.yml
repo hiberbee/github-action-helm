@@ -6,19 +6,23 @@ branding:
   color: blue
 inputs:
   helm-version:
-    default: 3.7.0
+    default: 3.7.1
     description: Helm version
     required: false
   helm:
     default: ''
     description: Helm command arguments
     required: false
+  quiet:
+    default: 'true'
+    description: Disabled output on plugin installation & download actions
+    required: false
   repository-config:
     default: repositories.yaml
     description: Path to the file containing Helm repository names and URLs
     required: false
   helmfile-version:
-    default: 0.141.0
+    default: 0.142.0
     description: Helmfile version
     required: false
   helmfile:
