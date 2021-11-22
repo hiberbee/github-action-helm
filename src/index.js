@@ -5854,6 +5854,7 @@ var io_util_1 = __webpack_require__(672);
 var path_1 = __webpack_require__(622);
 var HelmfileArgs;
 (function (HelmfileArgs) {
+    HelmfileArgs["VALUES"] = "values";
     HelmfileArgs["SELECTORS"] = "selector";
     HelmfileArgs["ENVIRONMENT"] = "environment";
     HelmfileArgs["NAMESPACE"] = "namespace";
@@ -5865,11 +5866,16 @@ function getArgsFromInput() {
     return Object.values(HelmfileArgs)
         .filter(function (key) { return (0, core_1.getInput)(key) !== ''; })
         .map(function (key) {
-        return key === HelmfileArgs.SELECTORS
-            ? (0, core_1.getInput)(HelmfileArgs.SELECTORS)
-                .split(',')
-                .map(function (it) { return "--".concat(key, "=").concat(it); })
-            : ["--".concat(key, "=").concat((0, core_1.getInput)(key))];
+        switch (key) {
+            case HelmfileArgs.VALUES:
+                return ["--state-values-set=".concat((0, core_1.getInput)(HelmfileArgs.VALUES).split('\n').filter(Boolean).join(','))];
+            case HelmfileArgs.SELECTORS:
+                return (0, core_1.getInput)(HelmfileArgs.SELECTORS)
+                    .split(',')
+                    .map(function (it) { return "--".concat(key, "=").concat(it); });
+            default:
+                return ["--".concat(key, "=").concat((0, core_1.getInput)(key))];
+        }
     })
         .flat(1);
 }

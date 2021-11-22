@@ -13,6 +13,10 @@ inputs:
     default: ''
     description: Helm command arguments
     required: false
+  values:
+    default: ''
+    description: Values in multiline string defined as key=value
+    required: false
   quiet:
     default: 'true'
     description: Disabled output on plugin installation & download actions

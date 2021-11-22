@@ -39,6 +39,9 @@ jobs:
         with:
           helmfile: apply
           helmfile-config: test/helmfile.yaml
+          values: |
+            serviceAccount.create=false
+            image.repository=library/nginx
 
       - name: Get ingresses
         run: kubectl get ingress
