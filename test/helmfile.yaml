@@ -7,6 +7,12 @@ repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
 
+environments:
+  default:
+    values:
+      - image:
+          repository: nginx
+
 releases:
   - name: ingress-nginx
     chart: ingress-nginx/ingress-nginx
@@ -16,12 +22,12 @@ releases:
     chart: ./charts/nginx
     wait: false
     values:
-      - ingress:
+      - image:
+          repository: {{ .Values.image.repository }}
+        ingress:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
           hosts:
             - host: nginx.local
               paths: [ "/" ]
-
-
