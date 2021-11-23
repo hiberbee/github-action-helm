@@ -5868,7 +5868,11 @@ function getArgsFromInput() {
         .map(function (key) {
         switch (key) {
             case HelmfileArgs.VALUES:
-                return ["--state-values-set=".concat((0, core_1.getInput)(HelmfileArgs.VALUES).split('\n').filter(Boolean).join(','))];
+                return (0, core_1.getInput)(HelmfileArgs.VALUES)
+                    .split('\n')
+                    .map(function (it) { return it.trim(); })
+                    .filter(Boolean)
+                    .map(function (kv) { return "--set=".concat(kv); });
             case HelmfileArgs.SELECTORS:
                 return (0, core_1.getInput)(HelmfileArgs.SELECTORS)
                     .split(',')
