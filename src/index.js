@@ -5868,11 +5868,7 @@ function getArgsFromInput() {
         .map(function (key) {
         switch (key) {
             case HelmfileArgs.VALUES:
-                return (0, core_1.getInput)(HelmfileArgs.VALUES)
-                    .split('\n')
-                    .map(function (it) { return it.trim(); })
-                    .filter(Boolean)
-                    .map(function (kv) { return "--set=".concat(kv); });
+                return [];
             case HelmfileArgs.SELECTORS:
                 return (0, core_1.getInput)(HelmfileArgs.SELECTORS)
                     .split(',')
@@ -5881,6 +5877,7 @@ function getArgsFromInput() {
                 return ["--".concat(key, "=").concat((0, core_1.getInput)(key))];
         }
     })
+        .filter(function (it) { return it.length > 0; })
         .flat(1);
 }
 var workspaceDir = (0, index_1.getWorkspaceDir)();
@@ -5893,7 +5890,7 @@ var plugins = new Map()
     .set('secrets', new URL('https://github.com/jkroepke/helm-secrets'));
 function run() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
-        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, silent, repositoryArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
+        var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, silent, repositoryArgs, inlineValuesArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
         return (0, tslib_1.__generator)(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -5917,6 +5914,11 @@ function run() {
                     return [4, (0, io_util_1.exists)(repositoryConfigPath)];
                 case 2:
                     repositoryArgs = (_c.sent()) ? ['--repository-config', repositoryConfigPath] : [];
+                    inlineValuesArgs = (0, core_1.getInput)(HelmfileArgs.VALUES)
+                        .split('\n')
+                        .map(function (it) { return it.trim(); })
+                        .filter(Boolean)
+                        .map(function (kv) { return "--set=".concat(kv); });
                     return [4, (0, io_1.mkdirP)(helmCacheDir)];
                 case 3:
                     _c.sent();
@@ -5945,17 +5947,19 @@ function run() {
                     _c.label = 11;
                 case 11:
                     if (!((0, core_1.getInput)('helmfile') !== '')) return [3, 14];
-                    _b = (_a = getArgsFromInput()).concat;
+                    _b = (_a = getArgsFromInput())
+                        .concat;
                     return [4, (0, io_util_1.exists)(helmfileConfigPath)];
                 case 12:
-                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
+                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []])
+                        .concat(inlineValuesArgs);
                     return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile').split(' ')))];
                 case 13:
                     _c.sent();
                     return [3, 16];
                 case 14:
                     if (!((0, core_1.getInput)('helm') !== '')) return [3, 16];
-                    return [4, (0, exec_1.exec)('helm', (0, core_1.getInput)('helm').split(' ').concat(repositoryArgs))];
+                    return [4, (0, exec_1.exec)('helm', (0, core_1.getInput)('helm').split(' ').concat(repositoryArgs).concat(inlineValuesArgs))];
                 case 15:
                     _c.sent();
                     _c.label = 16;
