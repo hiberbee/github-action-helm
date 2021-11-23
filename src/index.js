@@ -5947,13 +5947,11 @@ function run() {
                     _c.label = 11;
                 case 11:
                     if (!((0, core_1.getInput)('helmfile') !== '')) return [3, 14];
-                    _b = (_a = getArgsFromInput())
-                        .concat;
+                    _b = (_a = getArgsFromInput()).concat;
                     return [4, (0, io_util_1.exists)(helmfileConfigPath)];
                 case 12:
-                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []])
-                        .concat(inlineValuesArgs);
-                    return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile').split(' ')))];
+                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
+                    return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile').split(' ').concat(inlineValuesArgs)))];
                 case 13:
                     _c.sent();
                     return [3, 16];
