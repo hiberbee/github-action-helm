@@ -3563,22 +3563,22 @@ var io_1 = __webpack_require__(1);
 var exec_1 = __webpack_require__(986);
 var core_1 = __webpack_require__(470);
 function getBinDir(rootDir) {
-    return (0, path_1.join)(rootDir, 'bin');
+    return (0, path_1.join)(rootDir, "bin");
 }
 exports.getBinDir = getBinDir;
 function getOsPlatform() {
-    return (0, os_1.platform)() === 'win32' ? 'windows' : (0, os_1.platform)().toLowerCase();
+    return (0, os_1.platform)() === "win32" ? "windows" : (0, os_1.platform)().toLowerCase();
 }
 exports.getOsPlatform = getOsPlatform;
 function getWorkspaceDir() {
     var _a;
-    return (_a = process.env.GITHUB_WORKSPACE) !== null && _a !== void 0 ? _a : (0, path_1.join)(__dirname, '..');
+    return (_a = process.env.GITHUB_WORKSPACE) !== null && _a !== void 0 ? _a : (0, path_1.join)(__dirname, "..");
 }
 exports.getWorkspaceDir = getWorkspaceDir;
 function download(url, destination) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+    return tslib_1.__awaiter(this, void 0, void 0, function () {
         var downloadPath, destinationDir;
-        return (0, tslib_1.__generator)(this, function (_a) {
+        return tslib_1.__generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, (0, tool_cache_1.downloadTool)(url)];
                 case 1:
@@ -3587,8 +3587,8 @@ function download(url, destination) {
                     return [4, (0, io_1.mkdirP)(destinationDir)];
                 case 2:
                     _a.sent();
-                    if (!(url.endsWith('tar.gz') || url.endsWith('tar') || url.endsWith('tgz'))) return [3, 5];
-                    return [4, (0, exec_1.exec)('tar', ['-xzf', downloadPath, "--strip=1"])];
+                    if (!(url.endsWith("tar.gz") || url.endsWith("tar") || url.endsWith("tgz"))) return [3, 5];
+                    return [4, (0, exec_1.exec)("tar", ["-xzf", downloadPath, "--strip=1"])];
                 case 3:
                     _a.sent();
                     return [4, (0, io_1.mv)((0, path_1.basename)(destination), destinationDir)];
@@ -3599,7 +3599,7 @@ function download(url, destination) {
                 case 6:
                     _a.sent();
                     _a.label = 7;
-                case 7: return [4, (0, exec_1.exec)('chmod', ['+x', destination])];
+                case 7: return [4, (0, exec_1.exec)("chmod", ["+x", destination])];
                 case 8:
                     _a.sent();
                     (0, core_1.addPath)(destinationDir);
@@ -3880,7 +3880,6 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-
 /* global global, define, System, Reflect, Promise */
 var __extends;
 var __assign;
@@ -3895,6 +3894,7 @@ var __values;
 var __read;
 var __spread;
 var __spreadArrays;
+var __spreadArray;
 var __await;
 var __asyncGenerator;
 var __asyncDelegator;
@@ -3931,9 +3931,11 @@ var __createBinding;
 (function (exporter) {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
 
     __extends = function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -4012,14 +4014,17 @@ var __createBinding;
         }
     };
 
-    __createBinding = function(o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
+    __exportStar = function(m, o) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
     };
 
-    __exportStar = function (m, exports) {
-        for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) exports[p] = m[p];
-    };
+    __createBinding = Object.create ? (function(o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    }) : (function(o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        o[k2] = m[k];
+    });
 
     __values = function (o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -4050,18 +4055,30 @@ var __createBinding;
         return ar;
     };
 
+    /** @deprecated */
     __spread = function () {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     };
 
+    /** @deprecated */
     __spreadArrays = function () {
         for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
         for (var r = Array(s), k = 0, i = 0; i < il; i++)
             for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
                 r[k] = a[j];
         return r;
+    };
+
+    __spreadArray = function (to, from, pack) {
+        if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+                if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+        }
+        return to.concat(ar || Array.prototype.slice.call(from));
     };
 
     __await = function (v) {
@@ -4099,11 +4116,17 @@ var __createBinding;
         return cooked;
     };
 
+    var __setModuleDefault = Object.create ? (function(o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+    }) : function(o, v) {
+        o["default"] = v;
+    };
+
     __importStar = function (mod) {
         if (mod && mod.__esModule) return mod;
         var result = {};
-        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-        result["default"] = mod;
+        if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+        __setModuleDefault(result, mod);
         return result;
     };
 
@@ -4111,19 +4134,17 @@ var __createBinding;
         return (mod && mod.__esModule) ? mod : { "default": mod };
     };
 
-    __classPrivateFieldGet = function (receiver, privateMap) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to get private field on non-instance");
-        }
-        return privateMap.get(receiver);
+    __classPrivateFieldGet = function (receiver, state, kind, f) {
+        if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
     };
 
-    __classPrivateFieldSet = function (receiver, privateMap, value) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to set private field on non-instance");
-        }
-        privateMap.set(receiver, value);
-        return value;
+    __classPrivateFieldSet = function (receiver, state, value, kind, f) {
+        if (kind === "m") throw new TypeError("Private method is not writable");
+        if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+        return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
     };
 
     exporter("__extends", __extends);
@@ -4140,6 +4161,7 @@ var __createBinding;
     exporter("__read", __read);
     exporter("__spread", __spread);
     exporter("__spreadArrays", __spreadArrays);
+    exporter("__spreadArray", __spreadArray);
     exporter("__await", __await);
     exporter("__asyncGenerator", __asyncGenerator);
     exporter("__asyncDelegator", __asyncDelegator);
@@ -5864,14 +5886,14 @@ var HelmfileArgs;
 })(HelmfileArgs || (HelmfileArgs = {}));
 function getArgsFromInput() {
     return Object.values(HelmfileArgs)
-        .filter(function (key) { return (0, core_1.getInput)(key) !== ''; })
+        .filter(function (key) { return (0, core_1.getInput)(key) !== ""; })
         .map(function (key) {
         switch (key) {
             case HelmfileArgs.VALUES:
                 return [];
             case HelmfileArgs.SELECTORS:
                 return (0, core_1.getInput)(HelmfileArgs.SELECTORS)
-                    .split(',')
+                    .split(",")
                     .map(function (it) { return "--".concat(key, "=").concat(it); });
             default:
                 return ["--".concat(key, "=").concat((0, core_1.getInput)(key))];
@@ -5882,47 +5904,47 @@ function getArgsFromInput() {
 }
 var workspaceDir = (0, index_1.getWorkspaceDir)();
 var binDir = (0, index_1.getBinDir)(workspaceDir);
-var cacheDir = (0, path_1.join)(workspaceDir, '.cache');
-var helmCacheDir = (0, path_1.join)(workspaceDir, 'helm');
+var cacheDir = (0, path_1.join)(workspaceDir, ".cache");
+var helmCacheDir = (0, path_1.join)(workspaceDir, "helm");
 var platform = (0, index_1.getOsPlatform)();
 var plugins = new Map()
-    .set('diff', new URL('https://github.com/databus23/helm-diff'))
-    .set('secrets', new URL('https://github.com/jkroepke/helm-secrets'));
+    .set("diff", new URL("https://github.com/databus23/helm-diff"))
+    .set("secrets", new URL("https://github.com/jkroepke/helm-secrets"));
 function run() {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+    return tslib_1.__awaiter(this, void 0, void 0, function () {
         var helmVersion, helmfileVersion, repositoryConfig, helmfileConfig, helmUrl, helmfileUrl, repositoryConfigPath, helmfileConfigPath, pluginUrls, silent, repositoryArgs, inlineValuesArgs, _i, pluginUrls_1, url, globalArgs, _a, _b, error_1;
-        return (0, tslib_1.__generator)(this, function (_c) {
+        return tslib_1.__generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    helmVersion = (0, core_1.getInput)('helm-version');
-                    helmfileVersion = (0, core_1.getInput)('helmfile-version');
-                    repositoryConfig = (0, core_1.getInput)('repository-config');
-                    helmfileConfig = (0, core_1.getInput)('helmfile-config');
+                    helmVersion = (0, core_1.getInput)("helm-version");
+                    helmfileVersion = (0, core_1.getInput)("helmfile-version");
+                    repositoryConfig = (0, core_1.getInput)("repository-config");
+                    helmfileConfig = (0, core_1.getInput)("helmfile-config");
                     helmUrl = "https://get.helm.sh/helm-v".concat(helmVersion, "-").concat(platform, "-amd64.tar.gz");
                     helmfileUrl = "https://github.com/roboll/helmfile/releases/download/v".concat(helmfileVersion, "/helmfile_").concat(platform, "_amd64");
                     repositoryConfigPath = (0, path_1.join)(workspaceDir, repositoryConfig);
                     helmfileConfigPath = (0, path_1.join)(workspaceDir, helmfileConfig);
-                    pluginUrls = (0, core_1.getInput)('plugins')
-                        .split(',')
+                    pluginUrls = (0, core_1.getInput)("plugins")
+                        .split(",")
                         .filter(function (name) { return plugins.has(name); })
                         .map(function (name) { return plugins.get(name); });
-                    silent = Boolean((0, core_1.getInput)('quiet'));
+                    silent = Boolean((0, core_1.getInput)("quiet"));
                     _c.label = 1;
                 case 1:
                     _c.trys.push([1, 17, , 18]);
-                    (0, core_1.exportVariable)('XDG_CACHE_HOME', cacheDir);
+                    (0, core_1.exportVariable)("XDG_CACHE_HOME", cacheDir);
                     return [4, (0, io_util_1.exists)(repositoryConfigPath)];
                 case 2:
-                    repositoryArgs = (_c.sent()) ? ['--repository-config', repositoryConfigPath] : [];
+                    repositoryArgs = (_c.sent()) ? ["--repository-config", repositoryConfigPath] : [];
                     inlineValuesArgs = (0, core_1.getInput)(HelmfileArgs.VALUES)
-                        .split('\n')
+                        .split("\n")
                         .map(function (it) { return it.trim(); })
                         .filter(Boolean)
                         .map(function (kv) { return "--set=".concat(kv); });
                     return [4, (0, io_1.mkdirP)(helmCacheDir)];
                 case 3:
                     _c.sent();
-                    return [4, (0, index_1.download)(helmUrl, (0, path_1.join)(binDir, 'helm'))];
+                    return [4, (0, index_1.download)(helmUrl, (0, path_1.join)(binDir, "helm"))];
                 case 4:
                     _c.sent();
                     _i = 0, pluginUrls_1 = pluginUrls;
@@ -5930,34 +5952,34 @@ function run() {
                 case 5:
                     if (!(_i < pluginUrls_1.length)) return [3, 8];
                     url = pluginUrls_1[_i];
-                    return [4, (0, exec_1.exec)('helm', ['plugin', 'install', url.toString()], { silent: silent })["catch"](core_1.warning)];
+                    return [4, (0, exec_1.exec)("helm", ["plugin", "install", url.toString()], { silent: silent })["catch"](core_1.warning)];
                 case 6:
                     _c.sent();
                     _c.label = 7;
                 case 7:
                     _i++;
                     return [3, 5];
-                case 8: return [4, (0, index_1.download)(helmfileUrl, (0, path_1.join)(binDir, 'helmfile'))];
+                case 8: return [4, (0, index_1.download)(helmfileUrl, (0, path_1.join)(binDir, "helmfile"))];
                 case 9:
                     _c.sent();
                     if (!(repositoryArgs.length > 0)) return [3, 11];
-                    return [4, (0, exec_1.exec)('helm', ['repo', 'update'].concat(repositoryArgs), { silent: silent })];
+                    return [4, (0, exec_1.exec)("helm", ["repo", "update"].concat(repositoryArgs), { silent: silent })];
                 case 10:
                     _c.sent();
                     _c.label = 11;
                 case 11:
-                    if (!((0, core_1.getInput)('helmfile') !== '')) return [3, 14];
+                    if (!((0, core_1.getInput)("helmfile") !== "")) return [3, 14];
                     _b = (_a = getArgsFromInput()).concat;
                     return [4, (0, io_util_1.exists)(helmfileConfigPath)];
                 case 12:
-                    globalArgs = _b.apply(_a, [(_c.sent()) ? ['--file', helmfileConfigPath] : []]);
-                    return [4, (0, exec_1.exec)('helmfile', globalArgs.concat((0, core_1.getInput)('helmfile').split(' ').concat(inlineValuesArgs)))];
+                    globalArgs = _b.apply(_a, [(_c.sent()) ? ["--file", helmfileConfigPath] : []]);
+                    return [4, (0, exec_1.exec)("helmfile", globalArgs.concat((0, core_1.getInput)("helmfile").split(" ").concat(inlineValuesArgs)))];
                 case 13:
                     _c.sent();
                     return [3, 16];
                 case 14:
-                    if (!((0, core_1.getInput)('helm') !== '')) return [3, 16];
-                    return [4, (0, exec_1.exec)('helm', (0, core_1.getInput)('helm').split(' ').concat(repositoryArgs).concat(inlineValuesArgs))];
+                    if (!((0, core_1.getInput)("helm") !== "")) return [3, 16];
+                    return [4, (0, exec_1.exec)("helm", (0, core_1.getInput)("helm").split(" ").concat(repositoryArgs).concat(inlineValuesArgs))];
                 case 15:
                     _c.sent();
                     _c.label = 16;
