@@ -26,7 +26,7 @@ inputs:
     description: Path to the file containing Helm repository names and URLs
     required: false
   helmfile-version:
-    default: 0.143.0
+    default: 0.144.0
     description: Helmfile version
     required: false
   helmfile:
