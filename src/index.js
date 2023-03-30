@@ -7661,8 +7661,10 @@ PERFORMANCE OF THIS SOFTWARE.
                 helmUrl = "https://get.helm.sh/helm-v"
                   .concat(helmVersion, "-")
                   .concat(platform, "-amd64.tar.gz");
-                // https://github.com/helmfile/helmfile/releases/download/v0.152.0/helmfile_0.152.0_linux_amd64.tar.gz
-                helmfileUrl = `https://github.com/helmfile/helmfile/releases/download/v${helmfileVersion}/helmfile_${helmfileVersion}_${platform}_amd64.tar.gz`
+                helmfileUrl =
+                  "https://github.com/roboll/helmfile/releases/download/v"
+                    .concat(helmfileVersion, "/helmfile_")
+                    .concat(platform, "_amd64");
                 repositoryConfigPath = (0, path_1.join)(
                   workspaceDir,
                   repositoryConfig
@@ -7823,7 +7825,6 @@ PERFORMANCE OF THIS SOFTWARE.
       var __awaiter =
         (this && this.__awaiter) ||
         function (thisArg, _arguments, P, generator) {
-          function adopt(value) {
             return value instanceof P
               ? value
               : new P(function (resolve) {
