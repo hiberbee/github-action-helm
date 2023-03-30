@@ -7662,7 +7662,7 @@ PERFORMANCE OF THIS SOFTWARE.
                   .concat(helmVersion, "-")
                   .concat(platform, "-amd64.tar.gz");
                 helmfileUrl =
-                  "https://github.com/roboll/helmfile/releases/download/v"
+                  "https://github.com/helmfile/helmfile/releases/download/v"
                     .concat(helmfileVersion, "/helmfile_")
                     .concat(platform, "_amd64");
                 repositoryConfigPath = (0, path_1.join)(
