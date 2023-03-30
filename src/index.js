@@ -7825,6 +7825,7 @@ PERFORMANCE OF THIS SOFTWARE.
       var __awaiter =
         (this && this.__awaiter) ||
         function (thisArg, _arguments, P, generator) {
+          function adopt(value) {
             return value instanceof P
               ? value
               : new P(function (resolve) {
