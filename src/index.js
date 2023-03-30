@@ -7664,7 +7664,7 @@ PERFORMANCE OF THIS SOFTWARE.
                 helmfileUrl =
                   "https://github.com/helmfile/helmfile/releases/download/v"
                     .concat(helmfileVersion, "/helmfile_")
-                    .concat(platform, "_amd64");
+                    .concat(platform, "_amd64.tar.gz");
                 repositoryConfigPath = (0, path_1.join)(
                   workspaceDir,
                   repositoryConfig
