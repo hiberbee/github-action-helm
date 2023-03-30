@@ -6,7 +6,7 @@ branding:
   color: blue
 inputs:
   helm-version:
-    default: 3.11.0
+    default: 3.11.2
     description: Helm version
     required: false
   helm:
@@ -26,7 +26,7 @@ inputs:
     description: Path to the file containing Helm repository names and URLs
     required: false
   helmfile-version:
-    default: 0.151.0
+    default: 0.144.0
     description: Helmfile version
     required: false
   helmfile:
